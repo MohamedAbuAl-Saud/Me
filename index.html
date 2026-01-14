@@ -1,1 +1,4253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeCuriTy-Ms | Elite Red Team Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        /* Protection Page Styles */
+        .protection-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            text-align: center;
+            padding: 20px;
+        }
 
+        .protection-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #0066ff;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(0, 102, 255, 0.5);
+        }
+
+        .protection-message {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: #ff0055;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+        }
+
+        .protection-submessage {
+            color: #00ff88;
+            font-size: 16px;
+            max-width: 600px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .protection-lock {
+            font-size: 48px;
+            color: #0066ff;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .protection-return {
+            color: #aaa;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+
+        .protection-return a {
+            color: #0066ff;
+            text-decoration: none;
+            border-bottom: 1px solid #0066ff;
+        }
+
+        /* Terminal Simulator Styles */
+        .interactive-terminal {
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            height: 400px;
+            overflow-y: auto;
+            border: 2px solid #0066ff;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
+        }
+
+        .terminal-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ff88;
+            font-size: 16px;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .terminal-btn.close {
+            background: #ff0055;
+        }
+
+        .terminal-btn.minimize {
+            background: #ffaa00;
+        }
+
+        .terminal-btn.maximize {
+            background: #00ff88;
+        }
+
+        .terminal-output {
+            margin-bottom: 10px;
+        }
+
+        .terminal-line {
+            margin-bottom: 5px;
+        }
+
+        .terminal-prompt {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .terminal-user {
+            color: #0066ff;
+        }
+
+        .terminal-host {
+            color: #ff0055;
+        }
+
+        .terminal-command {
+            color: #ffffff;
+            background: transparent;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            width: 70%;
+            outline: none;
+            caret-color: #00ff88;
+        }
+
+        .terminal-response {
+            color: #cccccc;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        .terminal-error {
+            color: #ff0055;
+        }
+
+        .terminal-success {
+            color: #00ff88;
+        }
+
+        .terminal-info {
+            color: #0066ff;
+        }
+
+        .terminal-warning {
+            color: #ffaa00;
+        }
+
+        .terminal-help {
+            color: #aaa;
+            margin-left: 20px;
+        }
+
+        .command-history {
+            opacity: 0.7;
+        }
+
+        /* Floating Particles */
+        .floating-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #0066ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff0055;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00ff88;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 59px, 0); }
+            10% { clip: rect(48px, 9999px, 29px, 0); }
+            15% { clip: rect(42px, 9999px, 73px, 0); }
+            20% { clip: rect(63px, 9999px, 27px, 0); }
+            25% { clip: rect(34px, 9999px, 55px, 0); }
+            30% { clip: rect(86px, 9999px, 73px, 0); }
+            35% { clip: rect(20px, 9999px, 20px, 0); }
+            40% { clip: rect(26px, 9999px, 60px, 0); }
+            45% { clip: rect(25px, 9999px, 66px, 0); }
+            50% { clip: rect(57px, 9999px, 98px, 0); }
+            55% { clip: rect(5px, 9999px, 46px, 0); }
+            60% { clip: rect(82px, 9999px, 31px, 0); }
+            65% { clip: rect(54px, 9999px, 27px, 0); }
+            70% { clip: rect(28px, 9999px, 99px, 0); }
+            75% { clip: rect(45px, 9999px, 69px, 0); }
+            80% { clip: rect(23px, 9999px, 85px, 0); }
+            85% { clip: rect(54px, 9999px, 84px, 0); }
+            90% { clip: rect(45px, 9999px, 47px, 0); }
+            95% { clip: rect(37px, 9999px, 20px, 0); }
+            100% { clip: rect(4px, 9999px, 91px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(40px, 9999px, 86px, 0); }
+            95% { clip: rect(45px, 9999px, 72px, 0); }
+            100% { clip: rect(23px, 9999px, 49px, 0); }
+        }
+
+        /* Existing styles remain unchanged */
+        :root {
+            --primary: #0066ff;
+            --secondary: #ff0055;
+            --accent: #00ff88;
+            --dark: #000000;
+            --darker: #000000;
+            --light: #ffffff;
+            --gray: #1a1a1a;
+            --card-blue: rgba(0, 102, 255, 0.1);
+            --card-red: rgba(255, 0, 85, 0.1);
+            --card-green: rgba(0, 255, 136, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #000000;
+            color: var(--light);
+            overflow-x: hidden;
+            font-size: 12px;
+            cursor: none !important;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 102, 255, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -3;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        body.show-cursor {
+            cursor: auto !important;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100000;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s, width 0.3s, height 0.3s, border 0.3s;
+        }
+
+        .custom-cursor.hover {
+            width: 18px;
+            height: 18px;
+            background: rgba(0, 102, 255, 0.1);
+            border-color: var(--accent);
+        }
+
+        .custom-cursor.click {
+            width: 6px;
+            height: 6px;
+            border-color: var(--secondary);
+        }
+
+        /* Preloader - Updated */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s, visibility 0.8s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cyber-loader {
+            width: 120px;
+            height: 120px;
+            position: relative;
+        }
+
+        .loader-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            animation: rotate 2s linear infinite;
+        }
+
+        .loader-ring::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent, var(--primary), var(--secondary), var(--accent), transparent);
+            -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            padding: 3px;
+        }
+
+        .loader-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.7);
+            overflow: hidden;
+            animation: pulse 2s infinite;
+        }
+
+        .loader-logo img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1.5px solid var(--primary);
+        }
+
+        .loading-text {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .loading-text h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .loading-text p {
+            color: #aaa;
+            font-size: 11px;
+            margin: 3px 0;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 3px;
+            background: var(--gray);
+            border-radius: 1.5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            border-radius: 1.5px;
+            transition: width 2.5s linear;
+        }
+
+        .copyright {
+            position: absolute;
+            bottom: 10px;
+            color: #666;
+            font-size: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 102, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 8px 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .logo-img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.2px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .logo:hover .logo-img {
+            transform: rotate(360deg);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+            font-size: 10px;
+            padding: 4px 0;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        section {
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .hero {
+            padding-top: 70px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero .container {
+            width: 100%;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, rgba(0, 102, 255, 0) 70%);
+            border-radius: 50%;
+            animation: pulse 4s infinite;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            line-height: 1.2;
+        }
+
+        .hero h2 {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 11px;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 15px;
+            line-height: 1.5;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            border-radius: 10px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 9px;
+            transition: transform 0.3s;
+        }
+
+        .badge:hover {
+            transform: translateY(-1px);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 150px;
+            height: 150px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0052cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1.2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 102, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-learn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            font-weight: 700;
+        }
+
+        .btn-learn:hover {
+            background: #00cc6a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 255, 136, 0.3);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: #ccc;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: 11px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .skill-card.blue {
+            border-left: 3px solid var(--primary);
+            background: var(--card-blue);
+        }
+
+        .skill-card.red {
+            border-left: 3px solid var(--secondary);
+            background: var(--card-red);
+        }
+
+        .skill-card.green {
+            border-left: 3px solid var(--accent);
+            background: var(--card-green);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .skill-icon {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .skill-title {
+            font-size: 14px;
+            color: var(--light);
+            margin-bottom: 8px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: #ccc;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+        }
+
+        .skill-list li i {
+            color: var(--accent);
+            font-size: 8px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .project-header {
+            padding: 12px;
+            background: rgba(0, 102, 255, 0.08);
+            border-bottom: 1px solid rgba(0, 102, 255, 0.1);
+        }
+
+        .project-title {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tech-tag {
+            padding: 3px 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            font-size: 9px;
+            color: #ccc;
+        }
+
+        .project-body {
+            padding: 12px;
+        }
+
+        .project-description {
+            color: #ccc;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            font-size: 10px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .contact-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 102, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .contact-text h3 {
+            font-size: 13px;
+            color: var(--light);
+            margin-bottom: 4px;
+        }
+
+        .contact-text p {
+            color: #ccc;
+            font-size: 10px;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--light);
+            font-weight: 600;
+            font-size: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            color: var(--light);
+            font-size: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-control {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .support-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .support-title {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .address {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 9px;
+            color: #ccc;
+            border-left: 2px solid var(--secondary);
+        }
+
+        .copy-btn {
+            background: rgba(0, 102, 255, 0.15);
+            border: none;
+            color: var(--light);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 9px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 102, 255, 0.3);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 25px 0 15px;
+            border-top: 1px solid rgba(0, 102, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .social-link {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .copyright-footer {
+            text-align: center;
+            color: #666;
+            font-size: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: #0052cc;
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-size: 11px;
+        }
+
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .help-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .help-option {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .help-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .help-option.selected {
+            border-color: var(--primary);
+            background: rgba(0, 102, 255, 0.1);
+        }
+
+        .help-icon {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .help-title {
+            font-size: 13px;
+            color: var(--light);
+            margin-bottom: 8px;
+        }
+
+        .help-description {
+            color: #aaa;
+            font-size: 9px;
+        }
+
+        .request-form {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .input-hint {
+            font-size: 9px;
+            color: #aaa;
+            margin-top: 3px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 1000px;
+                padding: 0 12px;
+            }
+            
+            .hero h1 {
+                font-size: 22px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+            
+            .cyber-loader {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .loader-logo {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .loader-logo img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                max-width: 900px;
+            }
+            
+            .hero h1 {
+                font-size: 20px;
+            }
+            
+            .hero h2 {
+                font-size: 11px;
+            }
+            
+            .section-title {
+                font-size: 16px;
+            }
+            
+            .about-content,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .cyber-loader {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .loader-logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .loader-logo img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 50px;
+                left: -100%;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.98);
+                flex-direction: column;
+                padding: 12px;
+                transition: left 0.3s;
+                z-index: 999;
+                backdrop-filter: blur(10px);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            .hero {
+                padding-top: 60px;
+                min-height: auto;
+            }
+            
+            .hero h1 {
+                font-size: 18px;
+            }
+            
+            .hero h2 {
+                font-size: 10px;
+            }
+            
+            .hero p {
+                font-size: 10px;
+            }
+            
+            .section-title {
+                font-size: 14px;
+            }
+            
+            .cyber-loader {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .loader-logo {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .loader-logo img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .loading-text h2 {
+                font-size: 16px;
+            }
+            
+            .loading-text p {
+                font-size: 10px;
+            }
+            
+            .loading-bar {
+                width: 180px;
+            }
+            
+            body {
+                cursor: auto !important;
+            }
+            
+            .custom-cursor {
+                display: none;
+            }
+            
+            .btn {
+                padding: 6px 12px;
+                font-size: 9px;
+            }
+            
+            .contact-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+            
+            .back-to-top {
+                width: 28px;
+                height: 28px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 16px;
+            }
+            
+            .hero h2 {
+                font-size: 9px;
+            }
+            
+            .section-title {
+                font-size: 13px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero::before {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .cyber-loader {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .loader-logo {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .loader-logo img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .loading-bar {
+                width: 150px;
+            }
+            
+            .loading-text h2 {
+                font-size: 14px;
+            }
+            
+            .loading-text p {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 8px;
+            }
+            
+            .hero h1 {
+                font-size: 14px;
+            }
+            
+            .section-title {
+                font-size: 12px;
+            }
+            
+            .skill-card,
+            .project-card,
+            .contact-form,
+            .support-card {
+                padding: 10px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .copyright {
+                font-size: 8px;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .terminal {
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            line-height: 1.4;
+            overflow: hidden;
+            border: 1px solid var(--primary);
+            height: 100%;
+            backdrop-filter: blur(5px);
+        }
+
+        .terminal-line {
+            margin-bottom: 4px;
+        }
+
+        .terminal-prompt {
+            color: var(--primary);
+        }
+
+        .terminal-command {
+            color: var(--light);
+        }
+
+        .terminal-output {
+            color: #aaa;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 102, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-card.blue {
+            border-left: 2px solid var(--primary);
+            background: var(--card-blue);
+        }
+
+        .stat-card.red {
+            border-left: 2px solid var(--secondary);
+            background: var(--card-red);
+        }
+
+        .stat-card.green {
+            border-left: 2px solid var(--accent);
+            background: var(--card-green);
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transition: width 1s ease;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+            border-radius: 1px;
+        }
+
+        .timeline-item {
+            padding: 8px 20px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 102, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .timeline-content.blue {
+            border-left: 2px solid var(--primary);
+            background: var(--card-blue);
+        }
+
+        .timeline-content.red {
+            border-left: 2px solid var(--secondary);
+            background: var(--card-red);
+        }
+
+        .timeline-content.green {
+            border-left: 2px solid var(--accent);
+            background: var(--card-green);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .service-card.blue {
+            border-left: 2px solid var(--primary);
+            background: var(--card-blue);
+        }
+
+        .service-card.red {
+            border-left: 2px solid var(--secondary);
+            background: var(--card-red);
+        }
+
+        .service-card.green {
+            border-left: 2px solid var(--accent);
+            background: var(--card-green);
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .service-title {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .service-description {
+            color: #ccc;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .tool-card.blue {
+            border-left: 2px solid var(--primary);
+            background: var(--card-blue);
+        }
+
+        .tool-card.red {
+            border-left: 2px solid var(--secondary);
+            background: var(--card-red);
+        }
+
+        .tool-card.green {
+            border-left: 2px solid var(--accent);
+            background: var(--card-green);
+        }
+
+        .tool-title {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-description {
+            color: #ccc;
+            font-size: 10px;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            line-height: 1.3;
+            overflow-x: auto;
+            border: 1px solid rgba(0, 102, 255, 0.1);
+            margin-top: 8px;
+        }
+
+        .marquee {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            background: rgba(0, 102, 255, 0.08);
+            padding: 8px 0;
+            margin: 20px 0;
+            border-top: 1px solid var(--primary);
+            border-bottom: 1px solid var(--primary);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            margin: 0 15px;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-size: 10px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .security-badge {
+            position: relative;
+            display: inline-block;
+            padding: 4px 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.02;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: var(--primary);
+        }
+
+        .grid-line.vertical {
+            width: 1px;
+            height: 100%;
+        }
+
+        .grid-line.horizontal {
+            width: 100%;
+            height: 1px;
+        }
+
+        .noise-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .morphing-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: #000000;
+            overflow: hidden;
+        }
+
+        .morphing-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.06;
+            animation: morph 15s infinite ease-in-out;
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 50%; transform: scale(1) rotate(0deg); }
+            25% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; transform: scale(1.1) rotate(90deg); }
+            50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; transform: scale(1) rotate(180deg); }
+            75% { border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%; transform: scale(1.2) rotate(270deg); }
+        }
+
+        .gradient-text-animate {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: rotate(180deg);
+        }
+
+        .accordion {
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+
+        .accordion-header {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--light);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            font-size: 12px;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .accordion-content {
+            padding: 0 12px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+        }
+
+        .accordion-item.active .accordion-content {
+            padding: 12px;
+            max-height: 1000px;
+        }
+
+        .accordion-item.active .accordion-header {
+            background: rgba(0, 102, 255, 0.1);
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.3s;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: var(--light);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+
+        .carousel-nav:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .carousel-nav.prev {
+            left: 10px;
+        }
+
+        .carousel-nav.next {
+            right: 10px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .tab.active {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .tab:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .experience-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 10px;
+            margin: 8px 4px;
+            box-shadow: 0 3px 8px rgba(0, 102, 255, 0.3);
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.03;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: .1em solid var(--primary);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .08em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary); }
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -2;
+            opacity: 0.01;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hologram-effect {
+            position: relative;
+        }
+
+        .hologram-effect::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.15;
+            filter: blur(8px);
+            animation: hologram 3s ease infinite;
+        }
+
+        @keyframes hologram {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.2; }
+        }
+        
+        .logo-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.03) 0%, rgba(0, 102, 255, 0) 70%);
+            z-index: -2;
+            pointer-events: none;
+            opacity: 0.2;
+        }
+
+        /* Penetration Testing Simulator */
+        .pentest-simulator {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--primary);
+            backdrop-filter: blur(5px);
+        }
+
+        .simulator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .simulator-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .simulator-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        .status-text {
+            font-size: 10px;
+            color: var(--accent);
+        }
+
+        .simulator-controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .simulator-btn {
+            padding: 6px 12px;
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 4px;
+            color: var(--primary);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .simulator-btn:hover {
+            background: rgba(0, 102, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .simulator-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .simulator-output {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            line-height: 1.3;
+            height: 120px;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 102, 255, 0.1);
+        }
+
+        .output-line {
+            margin-bottom: 4px;
+            color: #ccc;
+        }
+
+        .output-line.success {
+            color: var(--accent);
+        }
+
+        .output-line.warning {
+            color: #ff9900;
+        }
+
+        .output-line.error {
+            color: var(--secondary);
+        }
+
+        .output-line.info {
+            color: var(--primary);
+        }
+
+        .vulnerability-scanner {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--secondary);
+            backdrop-filter: blur(5px);
+        }
+
+        .scanner-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .scanner-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .vulnerability-list {
+            margin-top: 15px;
+        }
+
+        .vuln-item {
+            padding: 8px;
+            background: rgba(255, 0, 85, 0.1);
+            border-radius: 4px;
+            margin-bottom: 8px;
+            border-left: 2px solid var(--secondary);
+        }
+
+        .vuln-title {
+            font-size: 11px;
+            color: var(--secondary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .vuln-description {
+            font-size: 9px;
+            color: #ccc;
+            line-height: 1.3;
+        }
+
+        .vuln-severity {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 8px;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .severity-high {
+            background: rgba(255, 0, 85, 0.2);
+            color: var(--secondary);
+        }
+
+        .severity-medium {
+            background: rgba(255, 153, 0, 0.2);
+            color: #ff9900;
+        }
+
+        .severity-low {
+            background: rgba(0, 102, 255, 0.2);
+            color: var(--primary);
+        }
+
+        .zero-day-lab {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--accent);
+            backdrop-filter: blur(5px);
+        }
+
+        .lab-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .lab-input {
+            width: 100%;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 4px;
+            color: var(--light);
+            font-size: 10px;
+        }
+
+        .lab-btn {
+            padding: 6px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 4px;
+            color: var(--accent);
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lab-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .lab-results {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            line-height: 1.3;
+            height: 100px;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        /* Real-time Monitoring */
+        .monitor-panel {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid var(--primary);
+            backdrop-filter: blur(5px);
+        }
+
+        .monitor-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .monitor-stat {
+            text-align: center;
+            padding: 8px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            color: #aaa;
+        }
+
+        .monitor-log {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            line-height: 1.3;
+            height: 100px;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 102, 255, 0.1);
+        }
+
+        .log-entry {
+            margin-bottom: 4px;
+            padding: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .log-time {
+            color: #aaa;
+            font-size: 8px;
+        }
+
+        .log-message {
+            color: #ccc;
+        }
+
+        .log-threat {
+            color: var(--secondary);
+        }
+
+        .log-normal {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Protection Page (Hidden by default) -->
+    <div class="protection-page" id="protectionPage" style="display: none;">
+        <div class="protection-lock">
+            <i class="fas fa-lock"></i>
+        </div>
+        <img src="https://i.ibb.co/ZzBcYFr1/1767997097582.jpg" alt="SeCuriTy-Ms Logo" class="protection-logo">
+        <div class="protection-message">You are curious.</div>
+        <div class="protection-submessage">Curiosity is the first step to hacking. But remember: With great power comes great responsibility. This area is protected.</div>
+        <div class="protection-return">
+            <a href="#" onclick="hideProtectionPage(); return false;">Return to Safety</a>
+        </div>
+    </div>
+
+    <div class="logo-background"></div>
+
+    <!-- Preloader - Updated -->
+    <div class="preloader" id="preloader">
+        <div class="loader-container">
+            <div class="cyber-loader">
+                <div class="loader-ring"></div>
+                <div class="loader-logo">
+                    <img src="https://i.ibb.co/ZzBcYFr1/1767997097582.jpg" alt="SeCuriTy-Ms Logo">
+                </div>
+            </div>
+            <div class="loading-text">
+                <h2>SeCuriTy-Ms</h2>
+                <p>Al-Qiyadah Al-Zaeem</p>
+                <p>Mohamed Abu Al-Saud</p>
+                <p>Initializing Elite Security Platform...</p>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            <div class="copyright">
+                © 2026 SeCuriTy-Ms | All Rights Reserved<br>
+                Red Team Operations | Offensive Security Research<br>
+                Break to understand. Understand to secure.
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Page -->
+    <div class="noise-texture"></div>
+    <div class="grid-lines" id="gridLines"></div>
+    <div class="morphing-bg" id="morphingBg"></div>
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <header>
+        <div class="container header-container">
+            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <img src="https://i.ibb.co/ZzBcYFr1/1767997097582.jpg" alt="Logo" class="logo-img">
+                <div class="logo-text">SeCuriTy-Ms</div>
+            </div>
+            <button class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="navMenu">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#pentest">PenTesting</a>
+                <a href="#projects">Projects</a>
+                <a href="#tools">Tools</a>
+                <a href="#services">Services</a>
+                <a href="#research">Research</a>
+                <a href="#contact">Contact</a>
+                <a href="#support">Support</a>
+                <a href="#help">Help</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="gradient-text-animate">Mohamed Abu Al-Saud</h1>
+            <h2 class="typewriter">Al-Qiyadah Al-Zaeem | Red Team Specialist</h2>
+            <p>Certified cybersecurity expert with 4+ years of experience specializing in offensive operations (Red Team) and network security. With an analytical and strategic mindset focused on systematic attacks, system penetration, and understanding vulnerabilities from the ground up.</p>
+            
+            <div class="badges">
+                <span class="badge security-badge">Red Team Operations</span>
+                <span class="badge security-badge">Network Security</span>
+                <span class="badge security-badge">Penetration Testing</span>
+                <span class="badge security-badge">Cryptography</span>
+                <span class="badge security-badge">AI Security</span>
+                <span class="badge security-badge">Zero-Day Research</span>
+                <span class="experience-badge">4+ Years Experience</span>
+                <span class="experience-badge">35 Security Projects</span>
+            </div>
+            
+            <div class="buttons">
+                <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-primary hologram-effect">
+                    <i class="fab fa-telegram"></i> View Projects on Telegram
+                </a>
+                <a href="#pentest" class="btn btn-secondary">
+                    <i class="fas fa-crosshairs"></i> Try PenTesting Tools
+                </a>
+                <a href="https://mohamedabual-saud.github.io/OurcoursesMs" target="_blank" class="btn btn-learn">
+                    <i class="fas fa-graduation-cap"></i> Start Learning From Scratch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="marquee">
+        <div class="marquee-content">
+            <span class="marquee-item">Red Team Operations</span>
+            <span class="marquee-item">Network Penetration</span>
+            <span class="marquee-item">Web Application Security</span>
+            <span class="marquee-item">Zero-Day Exploits</span>
+            <span class="marquee-item">AI-Driven Security</span>
+            <span class="marquee-item">Vulnerability Research</span>
+            <span class="marquee-item">4+ Years Experience</span>
+            <span class="marquee-item">35 Security Projects</span>
+            <span class="marquee-item">Android Ransomware AI</span>
+            <span class="marquee-item">SQL Injection Expert</span>
+            <span class="marquee-item">XSS & CSRF Testing</span>
+            <span class="marquee-item">API Security Testing</span>
+        </div>
+    </section>
+
+    <section id="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-card blue">
+                    <div class="stat-number" data-count="35">0</div>
+                    <div class="stat-label">Security Projects</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="stat-number" data-count="4">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-number" data-count="208">0</div>
+                    <div class="stat-label">Security Operations</div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-label">Custom Tools</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About The Leader</h2>
+            <div class="about-content">
+                <!-- Interactive Terminal Simulator -->
+                <div class="interactive-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-title">SeCuriTy-Ms Terminal v2.0</div>
+                        <div class="terminal-controls">
+                            <div class="terminal-btn close"></div>
+                            <div class="terminal-btn minimize"></div>
+                            <div class="terminal-btn maximize"></div>
+                        </div>
+                    </div>
+                    <div class="terminal-output" id="terminalOutput">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
+                            <span class="terminal-command">welcome</span>
+                        </div>
+                        <div class="terminal-response terminal-info">
+                            Welcome to SeCuriTy-Ms Interactive Terminal
+                            Type 'help' to see available commands
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
+                            <span class="terminal-command">help</span>
+                        </div>
+                        <div class="terminal-response terminal-info">
+                            Available commands:
+                            - whoami: Show user information
+                            - about: Learn about SeCuriTy-Ms
+                            - skills: View technical skills
+                            - projects: List security projects
+                            - clear: Clear terminal screen
+                            - help: Show this help message
+                        </div>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
+                        <input type="text" class="terminal-command" id="terminalInput" autocomplete="off" autofocus>
+                    </div>
+                </div>
+                
+                <div class="skill-card green">
+                    <div class="skill-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3 class="skill-title">Operational Philosophy</h3>
+                    <p class="about-text">Started from basic experiments in network testing and understanding protection mechanisms. My skills gradually evolved until I became able to analyze complex systems, discover security vulnerabilities, and simulate realistic attacks to assess the true level of security.</p>
+                    <p class="about-text">Alongside technical work, I believe that real Red Team is built with mentality before tools. I work as a leader to develop new and experienced members, raise their offensive capabilities, and enhance analytical thinking and teamwork.</p>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 95%"></div>
+                    </div>
+                    <span class="help-description">Red Team Operations: 95%</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 90%"></div>
+                    </div>
+                    <span class="help-description">Penetration Testing: 90%</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 88%"></div>
+                    </div>
+                    <span class="help-description">Malware Analysis: 88%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="glass-effect">
+        <div class="container">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <div class="tabs">
+                <div class="tab active" data-tab="pentest">Penetration Testing</div>
+                <div class="tab" data-tab="systems">Systems</div>
+                <div class="tab" data-tab="programming">Programming</div>
+                <div class="tab" data-tab="security">Security</div>
+                <div class="tab" data-tab="specialized">Specialized</div>
+            </div>
+            <div class="tab-content active" id="pentest-content">
+                <div class="skills-grid">
+                    <div class="skill-card blue">
+                        <div class="skill-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="skill-title">Web Application Security</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Advanced SQL Injection testing & exploitation</li>
+                            <li><i class="fas fa-check"></i> Cross-Site Scripting (XSS) detection & payload crafting</li>
+                            <li><i class="fas fa-check"></i> CSRF & SSRF vulnerability assessment</li>
+                            <li><i class="fas fa-check"></i> File Upload vulnerability exploitation</li>
+                            <li><i class="fas fa-check"></i> API Security testing & parameter tampering</li>
+                            <li><i class="fas fa-check"></i> Business Logic Flaw discovery</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card red">
+                        <div class="skill-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3 class="skill-title">Network Penetration Testing</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Port scanning & service enumeration</li>
+                            <li><i class="fas fa-check"></i> Vulnerability scanning with custom scripts</li>
+                            <li><i class="fas fa-check"></i> Man-in-the-Middle attacks & traffic analysis</li>
+                            <li><i class="fas fa-check"></i> Password cracking & hash analysis</li>
+                            <li><i class="fas fa-check"></i> Firewall & IDS evasion techniques</li>
+                            <li><i class="fas fa-check"></i> Wireless network security assessment</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card green">
+                        <div class="skill-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="skill-title">Zero-Day Research</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Fuzzing techniques for vulnerability discovery</li>
+                            <li><i class="fas fa-check"></i> Reverse engineering & binary analysis</li>
+                            <li><i class="fas fa-check"></i> Memory corruption vulnerability research</li>
+                            <li><i class="fas fa-check"></i> Exploit development & proof-of-concept creation</li>
+                            <li><i class="fas fa-check"></i> Responsible disclosure procedures</li>
+                            <li><i class="fas fa-check"></i> CVE analysis & vulnerability tracking</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card blue">
+                        <div class="skill-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="skill-title">Mobile Security Testing</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Android application reverse engineering</li>
+                            <li><i class="fas fa-check"></i> iOS application security assessment</li>
+                            <li><i class="fas fa-check"></i> Mobile API testing & analysis</li>
+                            <li><i class="fas fa-check"></i> Certificate pinning bypass techniques</li>
+                            <li><i class="fas fa-check"></i> Mobile malware analysis</li>
+                            <li><i class="fas fa-check"></i> Device rooting & jailbreaking for security testing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="systems-content">
+                <div class="skills-grid">
+                    <div class="skill-card blue">
+                        <div class="skill-icon">
+                            <i class="fab fa-linux"></i>
+                        </div>
+                        <h3 class="skill-title">Linux Systems Expertise</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Ubuntu, Debian, Kali Linux, Arch Linux, Parrot OS, OpenSUSE</li>
+                            <li><i class="fas fa-check"></i> Deep understanding of system structure, permissions, and services</li>
+                            <li><i class="fas fa-check"></i> Package and repository management</li>
+                            <li><i class="fas fa-check"></i> Networking & System Hardening</li>
+                            <li><i class="fas fa-check"></i> Customizing systems for Red Team & Offensive Operations</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card red">
+                        <div class="skill-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="skill-title">Mobile & Device Security</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Android system and device security testing</li>
+                            <li><i class="fas fa-check"></i> Android application security analysis</li>
+                            <li><i class="fas fa-check"></i> Device vulnerability discovery at system and application level</li>
+                            <li><i class="fas fa-check"></i> Realistic device penetration scenarios simulation</li>
+                            <li><i class="fas fa-check"></i> Device behavior analysis in targeted environments</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card green">
+                        <div class="skill-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3 class="skill-title">Systems, Servers & Device Security</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Linux/Windows Systems & Servers penetration testing</li>
+                            <li><i class="fas fa-check"></i> Cloud & VPS Environments security assessment</li>
+                            <li><i class="fas fa-check"></i> Server Hardening & Weak Point Analysis</li>
+                            <li><i class="fas fa-check"></i> System-level Privilege Escalation</li>
+                            <li><i class="fas fa-check"></i> Service and application analysis running on servers</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card blue">
+                        <div class="skill-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3 class="skill-title">Networking</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Network Penetration Testing</li>
+                            <li><i class="fas fa-check"></i> Advanced Traffic Analysis & Protocol Analysis</li>
+                            <li><i class="fas fa-check"></i> Firewall Bypassing Techniques</li>
+                            <li><i class="fas fa-check"></i> Network Mapping & Reconnaissance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="programming-content">
+                <div class="skills-grid">
+                    <div class="skill-card red">
+                        <div class="skill-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <h3 class="skill-title">Programming & Scripting</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Python – Automation, analysis, security tool development</li>
+                            <li><i class="fas fa-check"></i> JavaScript – Security analysis, Web Security, Client‑Side Logic</li>
+                            <li><i class="fas fa-check"></i> C – Low-level understanding, memory analysis and program behavior</li>
+                            <li><i class="fas fa-check"></i> Bash – System automation, process management, offensive scripts</li>
+                            <li><i class="fas fa-check"></i> PHP – Web application and server security analysis</li>
+                            <li><i class="fas fa-check"></i> HTML & CSS – Interface understanding from security perspective</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card green">
+                        <div class="skill-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="skill-title">Databases & Data Handling</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> SQL database security analysis</li>
+                            <li><i class="fas fa-check"></i> Understanding query structure and logical vulnerabilities</li>
+                            <li><i class="fas fa-check"></i> Access mechanisms and permissions assessment</li>
+                            <li><i class="fas fa-check"></i> Data protection and secure handling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="security-content">
+                <div class="skills-grid">
+                    <div class="skill-card blue">
+                        <div class="skill-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="skill-title">Cryptography & Data Protection</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Deep understanding of encryption concepts and data protection</li>
+                            <li><i class="fas fa-check"></i> Working with Encryption/Decryption Concepts</li>
+                            <li><i class="fas fa-check"></i> Hashing Algorithms implementation and analysis</li>
+                            <li><i class="fas fa-check"></i> Secure Data Handling procedures</li>
+                            <li><i class="fas fa-check"></i> Analysis of encryption mechanisms used in systems and applications</li>
+                            <li><i class="fas fa-check"></i> Vulnerability assessment in protection and encryption applications</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card red">
+                        <div class="skill-icon">
+                            <i class="fas fa-biohazard"></i>
+                        </div>
+                        <h3 class="skill-title">Malware & Ransomware Awareness</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> Advanced analytical expertise in ransomware</li>
+                            <li><i class="fas fa-check"></i> Understanding destructive attack lifecycles</li>
+                            <li><i class="fas fa-check"></i> Malicious software behavior analysis and system impact</li>
+                            <li><i class="fas fa-check"></i> Study of spread mechanisms, encryption, and disruption</li>
+                            <li><i class="fas fa-check"></i> Applying knowledge in detection, analysis, and security assessment</li>
+                            <li><i class="fas fa-check"></i> Knowledge of attack aims at understanding and protection, not chaos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="specialized-content">
+                <div class="skills-grid">
+                    <div class="skill-card green">
+                        <div class="skill-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="skill-title">Specialized Expertise</h3>
+                        <ul class="skill-list">
+                            <li><i class="fas fa-check"></i> 4+ years practical offensive security experience across multiple systems</li>
+                            <li><i class="fas fa-check"></i> 35 completed security projects and penetration tests</li>
+                            <li><i class="fas fa-check"></i> AI-powered security tool development</li>
+                            <li><i class="fas fa-check"></i> Zero-day vulnerability research and analysis</li>
+                            <li><i class="fas fa-check"></i> Custom security framework development</li>
+                            <li><i class="fas fa-check"></i> Advanced persistent threat simulation</li>
+                            <li><i class="fas fa-check"></i> All activities conducted for educational, research, or authorized security testing purposes only</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Penetration Testing Section -->
+    <section id="pentest" class="glass-effect">
+        <div class="container">
+            <h2 class="section-title">Penetration Testing & Vulnerability Research</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div class="pentest-simulator">
+                    <div class="simulator-header">
+                        <h3 class="simulator-title">Web Vulnerability Scanner</h3>
+                        <div class="simulator-status">
+                            <div class="status-indicator"></div>
+                            <span class="status-text">Ready</span>
+                        </div>
+                    </div>
+                    <div class="simulator-controls">
+                        <button class="simulator-btn active" data-scan="sql">SQL Injection</button>
+                        <button class="simulator-btn" data-scan="xss">XSS Testing</button>
+                        <button class="simulator-btn" data-scan="csrf">CSRF Detection</button>
+                        <button class="simulator-btn" data-scan="full">Full Scan</button>
+                    </div>
+                    <div class="simulator-output" id="scanOutput">
+                        <div class="output-line info">[INFO] Web Vulnerability Scanner initialized</div>
+                        <div class="output-line info">[INFO] Target: example.com</div>
+                        <div class="output-line info">[INFO] Ready to begin security assessment</div>
+                        <div class="output-line info">[INFO] Select a scan type to begin...</div>
+                    </div>
+                </div>
+                <div class="vulnerability-scanner">
+                    <h3 class="simulator-title">Vulnerability Assessment</h3>
+                    <div class="scanner-progress">
+                        <div class="scanner-progress-bar" id="scanProgress"></div>
+                    </div>
+                    <div class="vulnerability-list" id="vulnList">
+                        <div class="vuln-item">
+                            <div class="vuln-title">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                SQL Injection Vulnerability
+                            </div>
+                            <div class="vuln-description">
+                                Potential SQL injection point detected in login form
+                            </div>
+                            <span class="vuln-severity severity-high">HIGH</span>
+                        </div>
+                        <div class="vuln-item">
+                            <div class="vuln-title">
+                                <i class="fas fa-exclamation-circle"></i>
+                                XSS Vulnerability
+                            </div>
+                            <div class="vuln-description">
+                                Reflected XSS detected in search parameter
+                            </div>
+                            <span class="vuln-severity severity-medium">MEDIUM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="zero-day-lab">
+                    <h3 class="simulator-title">Zero-Day Research Lab</h3>
+                    <div class="lab-controls">
+                        <input type="text" class="lab-input" placeholder="Target URL or IP" id="targetInput">
+                        <button class="lab-btn" id="startResearch">Start Research</button>
+                        <input type="text" class="lab-input" placeholder="Vulnerability type" id="vulnType">
+                        <button class="lab-btn" id="analyzeVuln">Analyze</button>
+                    </div>
+                    <div class="lab-results" id="researchResults">
+                        <div class="output-line info">[ZERO-DAY LAB] Initialized</div>
+                        <div class="output-line info">[INFO] Ready for vulnerability research</div>
+                        <div class="output-line info">[INFO] Enter target and vulnerability type to begin</div>
+                    </div>
+                </div>
+                <div class="monitor-panel">
+                    <h3 class="simulator-title">Real-time Security Monitor</h3>
+                    <div class="monitor-stats">
+                        <div class="monitor-stat">
+                            <div class="stat-value" id="threatCount">0</div>
+                            <div class="stat-label">Threats</div>
+                        </div>
+                        <div class="monitor-stat">
+                            <div class="stat-value" id="scanCount">0</div>
+                            <div class="stat-label">Scans</div>
+                        </div>
+                        <div class="monitor-stat">
+                            <div class="stat-value" id="vulnCount">2</div>
+                            <div class="stat-label">Vulnerabilities</div>
+                        </div>
+                        <div class="monitor-stat">
+                            <div class="stat-value" id="uptime">100%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                    </div>
+                    <div class="monitor-log" id="monitorLog">
+                        <div class="log-entry">
+                            <span class="log-time">[12:30:45]</span>
+                            <span class="log-message"> System initialized</span>
+                        </div>
+                        <div class="log-entry">
+                            <span class="log-time">[12:31:10]</span>
+                            <span class="log-message log-threat"> High severity threat detected</span>
+                        </div>
+                        <div class="log-entry">
+                            <span class="log-time">[12:31:25]</span>
+                            <span class="log-message log-normal"> Security scan completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Elite Projects</h2>
+            <div class="carousel">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide">
+                        <h3 class="gradient-text">Advanced Web Vulnerability Scanner</h3>
+                        <p class="project-description">AI-powered web application scanner that detects SQL injection, XSS, CSRF, and other OWASP Top 10 vulnerabilities with intelligent payload generation and automated exploitation testing.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">AI/ML</span>
+                            <span class="tech-tag">SQLi</span>
+                            <span class="tech-tag">XSS</span>
+                            <span class="tech-tag">OWASP</span>
+                        </div>
+                        <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-primary" style="margin-top: 15px;">
+                            <i class="fab fa-telegram"></i> View on Telegram
+                        </a>
+                    </div>
+                    <div class="carousel-slide">
+                        <h3 class="gradient-text">Network Penetration Suite</h3>
+                        <p class="project-description">Comprehensive network security testing toolkit including port scanning, service enumeration, vulnerability assessment, and automated exploit framework for educational purposes.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Scapy</span>
+                            <span class="tech-tag">Nmap</span>
+                            <span class="tech-tag">Metasploit</span>
+                            <span class="tech-tag">Network</span>
+                        </div>
+                        <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-primary" style="margin-top: 15px;">
+                            <i class="fab fa-telegram"></i> View on Telegram
+                        </a>
+                    </div>
+                    <div class="carousel-slide">
+                        <h3 class="gradient-text">Zero-Day Research Platform</h3>
+                        <p class="project-description">Advanced platform for discovering and analyzing zero-day vulnerabilities in web applications, mobile apps, and network services with automated fuzzing and exploit development.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Fuzzing</span>
+                            <span class="tech-tag">Reverse Engineering</span>
+                            <span class="tech-tag">Exploit Dev</span>
+                            <span class="tech-tag">CVE Research</span>
+                        </div>
+                        <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-primary" style="margin-top: 15px;">
+                            <i class="fab fa-telegram"></i> View on Telegram
+                        </a>
+                    </div>
+                    <div class="carousel-slide">
+                        <h3 class="gradient-text">Mobile Security Assessment Framework</h3>
+                        <p class="project-description">Comprehensive mobile application security testing framework for Android and iOS with reverse engineering capabilities, API security testing, and vulnerability analysis.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">Swift</span>
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">iOS</span>
+                            <span class="tech-tag">Security</span>
+                        </div>
+                        <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-primary" style="margin-top: 15px;">
+                            <i class="fab fa-telegram"></i> View on Telegram
+                        </a>
+                    </div>
+                </div>
+                <button class="carousel-nav prev">❮</button>
+                <button class="carousel-nav next">❯</button>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-telegram"></i> View All Projects on Telegram Channel
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="tools" class="glass-effect">
+        <div class="container">
+            <h2 class="section-title">Security Tools</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Web Security Tools</span>
+                        <i class="fas fa-plus accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="tools-grid">
+                            <div class="tool-card blue">
+                                <h3 class="tool-title"><i class="fas fa-globe"></i> SQLiDetector Pro</h3>
+                                <p class="tool-description">Advanced SQL injection scanner with automated exploitation and database fingerprinting capabilities.</p>
+                                <div class="code-block">$ sqldetector --url https://target.com --deep-scan --exploit</div>
+                            </div>
+                            <div class="tool-card red">
+                                <h3 class="tool-title"><i class="fas fa-code"></i> XSS Hunter Suite</h3>
+                                <p class="tool-description">Comprehensive XSS detection framework with payload management and automated testing.</p>
+                                <div class="code-block">$ xsshunter --scan --payloads advanced --report detailed</div>
+                            </div>
+                            <div class="tool-card green">
+                                <h3 class="tool-title"><i class="fas fa-shield-alt"></i> CSRF Tester</h3>
+                                <p class="tool-description">CSRF vulnerability detection and exploitation tool with token analysis capabilities.</p>
+                                <div class="code-block">$ csrftester --target login.php --analyze-tokens</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Network Security Tools</span>
+                        <i class="fas fa-plus accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="tools-grid">
+                            <div class="tool-card blue">
+                                <h3 class="tool-title"><i class="fas fa-network-wired"></i> PortScanner Pro</h3>
+                                <p class="tool-description">Advanced port scanner with service detection, OS fingerprinting, and vulnerability mapping.</p>
+                                <div class="code-block">$ portscanner --target 192.168.1.1 --stealth --service-detect</div>
+                            </div>
+                            <div class="tool-card red">
+                                <h3 class="tool-title"><i class="fas fa-shield-alt"></i> NetSentry</h3>
+                                <p class="tool-description">Network intrusion detection and prevention system with real-time monitoring and AI-based threat detection.</p>
+                                <div class="code-block">$ netsentry --monitor --ai-detection --alert --log attacks.log</div>
+                            </div>
+                            <div class="tool-card green">
+                                <h3 class="tool-title"><i class="fas fa-globe"></i> TrafficRedirector</h3>
+                                <p class="tool-description">Intelligent traffic redirection tool that can manipulate DNS and HTTP requests for security testing scenarios.</p>
+                                <div class="code-block">$ trafficredirect --dns-spoof --http-modify --target-domain example.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Mobile Security Tools</span>
+                        <i class="fas fa-plus accordion-icon"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="tools-grid">
+                            <div class="tool-card blue">
+                                <h3 class="tool-title"><i class="fas fa-mobile-alt"></i> AndroAnalyzer</h3>
+                                <p class="tool-description">Android application security analysis tool with reverse engineering capabilities and vulnerability assessment.</p>
+                                <div class="code-block">$ androanalyzer --apk file.apk --deep-scan --report vulnerabilities.txt</div>
+                            </div>
+                            <div class="tool-card red">
+                                <h3 class="tool-title"><i class="fas fa-shield-virus"></i> MobileShield Test</h3>
+                                <p class="tool-description">Mobile device security testing framework for assessing device vulnerabilities and security configurations.</p>
+                                <div class="code-block">$ mobileshield --device android --test-all --output report.pdf</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="https://github.com/MohamedAbuAl-Saud" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-github"></i> View All Tools on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Elite Services</h2>
+            <div class="services-grid">
+                <div class="service-card blue">
+                    <div class="service-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <h3 class="service-title">Penetration Testing</h3>
+                    <p class="service-description">Comprehensive web, network, and mobile application penetration testing with detailed reporting and remediation guidance.</p>
+                </div>
+                <div class="service-card red">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="service-title">Vulnerability Assessment</h3>
+                    <p class="service-description">Thorough vulnerability assessment and security audit for applications, networks, and systems.</p>
+                </div>
+                <div class="service-card green">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="service-title">Security Training</h3>
+                    <p class="service-description">Hands-on training in penetration testing, vulnerability research, and security best practices.</p>
+                </div>
+                <div class="service-card blue">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="service-title">Security Tool Development</h3>
+                    <p class="service-description">Custom security tool development for specific testing requirements and scenarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="glass-effect">
+        <div class="container">
+            <h2 class="section-title">Secure Contact</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>Telegram</h3>
+                            <p>@A_Y_TR</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>WhatsApp</h3>
+                            <p>+251 97 038 4031</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="contact-text">
+                            <h3>GitHub</h3>
+                            <p>MohamedAbuAl-Saud</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Message Type</label>
+                            <select class="form-control">
+                                <option>Penetration Testing Request</option>
+                                <option>Security Consultation</option>
+                                <option>Training Request</option>
+                                <option>Tool Development</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Your Message</label>
+                            <textarea class="form-control form-textarea" placeholder="Type your secure message here..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Method</label>
+                            <input type="text" class="form-control" placeholder="Telegram @username or Phone" required>
+                            <div class="input-hint">Format: @username or +251XXXXXXXXX</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Send Encrypted Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">SeCuriTy-Ms</div>
+                    <p style="color: #aaa; margin-top: 8px; font-size: 11px;">Elite Red Team Operations Platform</p>
+                    <p style="color: #666; margin-top: 4px; font-size: 9px;">4+ Years Experience | 35 Security Projects</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://t.me/A_Y_TR" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="https://github.com/MohamedAbuAl-Saud" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://wa.me/251970384031" target="_blank" class="social-link">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://t.me/cybersecurityTemDF" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright-footer">
+                <p>© 2026 SeCuriTy-Ms | Elite Red Team Operations Platform. All rights reserved.</p>
+                <p style="margin-top: 8px; color: var(--primary); font-size: 10px; font-weight: 600;">Break to understand. Understand to secure.</p>
+                <p style="margin-top: 4px; color: #666; font-size: 9px;">All activities conducted for educational, research, or authorized security testing purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#home" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-palette"></i>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // حماية المسارات
+        const protectedPaths = ['/admin', '/console', '/login', '/root', '/wp-admin', '/phpmyadmin', '/administrator'];
+        const protectedKeywords = ['admin', 'console', 'login', 'root', 'password', 'secret', 'backup', 'config'];
+        
+        function checkForProtectedAccess() {
+            const currentPath = window.location.pathname.toLowerCase();
+            const currentHash = window.location.hash.toLowerCase();
+            const currentUrl = window.location.href.toLowerCase();
+            
+            // التحقق من المسارات المحمية
+            for (const path of protectedPaths) {
+                if (currentPath.includes(path.toLowerCase()) || currentUrl.includes(path.toLowerCase())) {
+                    showProtectionPage();
+                    return;
+                }
+            }
+            
+            // التحقق من الكلمات المفتاحية في العنوان
+            for (const keyword of protectedKeywords) {
+                if (currentUrl.includes(keyword) && !currentUrl.includes('#' + keyword)) {
+                    showProtectionPage();
+                    return;
+                }
+            }
+            
+            // التحقق من محاولات الحقن
+            const injectionPatterns = [
+                /<script>/, /<\/script>/, /onload=/, /onerror=/, /onclick=/,
+                /union select/, /select.*from/, /insert into/, /update.*set/,
+                /delete from/, /drop table/, /exec\(/, /eval\(/, /alert\(/,
+                /document\.cookie/, /localStorage/, /sessionStorage/
+            ];
+            
+            for (const pattern of injectionPatterns) {
+                if (pattern.test(currentUrl) || pattern.test(decodeURIComponent(currentUrl))) {
+                    showProtectionPage();
+                    return;
+                }
+            }
+        }
+        
+        function showProtectionPage() {
+            document.getElementById('protectionPage').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // إضافة تأثير الجليتش
+            const message = document.querySelector('.protection-message');
+            message.setAttribute('data-text', message.textContent);
+            message.classList.add('glitch');
+            
+            // إضافة جسيمات عائمة
+            createProtectionParticles();
+        }
+        
+        function hideProtectionPage() {
+            document.getElementById('protectionPage').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            window.history.replaceState({}, document.title, '/');
+        }
+        
+        function createProtectionParticles() {
+            const protectionPage = document.getElementById('protectionPage');
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'floating-particle';
+                
+                const size = Math.random() * 4 + 2;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                protectionPage.appendChild(particle);
+            }
+        }
+        
+        // تهيئة صفحة التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            const loadingProgress = document.getElementById('loadingProgress');
+            
+            loadingProgress.style.width = '100%';
+            
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    initMainPage();
+                    checkForProtectedAccess();
+                }, 800);
+            }, 2500);
+        });
+
+        function initMainPage() {
+            initAnimations();
+            initCustomCursor();
+            initMobileNav();
+            initScrollEffects();
+            initInteractiveElements();
+            initGridLines();
+            initMorphingBg();
+            initMatrixRain();
+            createFloatingShapes();
+            initPentestSimulator();
+            initTerminal();
+        }
+
+        function initTerminal() {
+            const terminalInput = document.getElementById('terminalInput');
+            const terminalOutput = document.getElementById('terminalOutput');
+            let commandHistory = [];
+            let historyIndex = -1;
+            
+            const commands = {
+                'whoami': {
+                    response: `
+                    <div class="terminal-response terminal-success">
+                    User: Al-Qiyadah Al-Zaeem (The Leadership Leader)<br>
+                    Real Name: Mohamed Abu Al-Saud<br>
+                    Role: Red Team Leader | Offensive Security Specialist<br>
+                    Experience: 4+ Years in Cybersecurity | 35 Projects<br>
+                    Location: Digital Battlefield<br>
+                    Status: <span style="color: #00ff88;">● ACTIVE</span>
+                    </div>`,
+                    type: 'success'
+                },
+                'about': {
+                    response: `
+                    <div class="terminal-response terminal-info">
+                    <strong>SeCuriTy-Ms Platform v2.0</strong><br>
+                    Elite Red Team Operations System<br><br>
+                    This platform showcases 4+ years of offensive security expertise<br>
+                    with 35 completed security projects and custom tool development.<br><br>
+                    Philosophy: "Break to understand. Understand to secure."<br>
+                    All activities are for educational and authorized testing purposes.
+                    </div>`,
+                    type: 'info'
+                },
+                'skills': {
+                    response: `
+                    <div class="terminal-response terminal-info">
+                    <strong>Technical Arsenal:</strong><br>
+                    1. Web Application Security (SQLi, XSS, CSRF, SSRF)<br>
+                    2. Network Penetration Testing<br>
+                    3. Mobile Security Assessment<br>
+                    4. Zero-Day Research & Exploit Development<br>
+                    5. Reverse Engineering & Malware Analysis<br>
+                    6. AI-Powered Security Tools<br>
+                    7. Cryptography & Data Protection<br><br>
+                    Type 'tools' for specific tool information.
+                    </div>`,
+                    type: 'info'
+                },
+                'projects': {
+                    response: `
+                    <div class="terminal-response terminal-info">
+                    <strong>Elite Projects (35 Total):</strong><br>
+                    1. Advanced Web Vulnerability Scanner<br>
+                    2. Network Penetration Suite<br>
+                    3. Zero-Day Research Platform<br>
+                    4. Mobile Security Assessment Framework<br>
+                    5. AI-Driven Ransomware Analysis Tool<br>
+                    6. Custom Exploit Development Framework<br>
+                    7. Automated Security Testing Pipeline<br><br>
+                    View all projects at: https://t.me/cybersecurityTemDF
+                    </div>`,
+                    type: 'info'
+                },
+                'tools': {
+                    response: `
+                    <div class="terminal-response terminal-info">
+                    <strong>Custom Security Tools:</strong><br>
+                    1. SQLiDetector Pro - Advanced SQL injection scanner<br>
+                    2. XSS Hunter Suite - Comprehensive XSS detection<br>
+                    3. PortScanner Pro - Network reconnaissance tool<br>
+                    4. AndroAnalyzer - Mobile app security analyzer<br>
+                    5. ZeroDay Lab - Vulnerability research platform<br>
+                    6. NetSentry - Real-time network monitor<br>
+                    7. TrafficRedirector - Traffic manipulation tool<br><br>
+                    View source code: https://github.com/MohamedAbuAl-Saud
+                    </div>`,
+                    type: 'info'
+                },
+                'clear': {
+                    action: 'clear',
+                    type: 'system'
+                },
+                'help': {
+                    response: `
+                    <div class="terminal-response terminal-info">
+                    <strong>Available Commands:</strong><br>
+                    - whoami: Show user information<br>
+                    - about: Learn about SeCuriTy-Ms<br>
+                    - skills: View technical skills<br>
+                    - projects: List security projects<br>
+                    - tools: Show custom security tools<br>
+                    - clear: Clear terminal screen<br>
+                    - help: Show this help message<br><br>
+                    <strong>Note:</strong> This is a simulated terminal for demonstration.
+                    </div>`,
+                    type: 'info'
+                },
+                'welcome': {
+                    response: `
+                    <div class="terminal-response terminal-info">
+                    Welcome to SeCuriTy-Ms Interactive Terminal<br>
+                    Type 'help' to see available commands
+                    </div>`,
+                    type: 'info'
+                }
+            };
+            
+            function processCommand(command) {
+                const cmd = command.trim().toLowerCase();
+                
+                if (!cmd) return;
+                
+                // إضافة إلى السجل
+                commandHistory.push(cmd);
+                historyIndex = commandHistory.length;
+                
+                // عرض الأمر المدخل
+                const commandLine = document.createElement('div');
+                commandLine.className = 'terminal-line';
+                commandLine.innerHTML = `
+                    <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
+                    <span class="terminal-command">${command}</span>
+                `;
+                terminalOutput.appendChild(commandLine);
+                
+                // معالجة الأمر
+                if (commands[cmd]) {
+                    if (commands[cmd].action === 'clear') {
+                        terminalOutput.innerHTML = '';
+                    } else {
+                        terminalOutput.innerHTML += commands[cmd].response;
+                    }
+                } else {
+                    // أمر غير معروف
+                    const errorResponse = document.createElement('div');
+                    errorResponse.className = 'terminal-response terminal-error';
+                    errorResponse.innerHTML = `
+                    Command not found: ${command}<br>
+                    Type 'help' for available commands.
+                    `;
+                    terminalOutput.appendChild(errorResponse);
+                }
+                
+                // التمرير للأسفل
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                terminalInput.value = '';
+                
+                // التركيز على حقل الإدخال
+                terminalInput.focus();
+            }
+            
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    processCommand(terminalInput.value);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (commandHistory.length > 0) {
+                        historyIndex = Math.max(0, historyIndex - 1);
+                        terminalInput.value = commandHistory[historyIndex] || '';
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (commandHistory.length > 0) {
+                        historyIndex = Math.min(commandHistory.length, historyIndex + 1);
+                        terminalInput.value = commandHistory[historyIndex] || '';
+                    }
+                } else if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const currentInput = terminalInput.value.toLowerCase();
+                    const matchingCommands = Object.keys(commands).filter(cmd => 
+                        cmd.startsWith(currentInput)
+                    );
+                    
+                    if (matchingCommands.length === 1) {
+                        terminalInput.value = matchingCommands[0];
+                    }
+                }
+            });
+            
+            // التركيز التلقائي على حقل الإدخال
+            terminalInput.focus();
+        }
+
+        function initCustomCursor() {
+            const cursor = document.getElementById('customCursor');
+            
+            if (window.innerWidth <= 768) {
+                cursor.style.display = 'none';
+                document.body.classList.add('show-cursor');
+                return;
+            }
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            document.querySelectorAll('a, button, .skill-card, .help-option, .tab, .accordion-header, .service-card, .contact-item, .simulator-btn, .lab-btn').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mousedown', () => cursor.classList.add('click'));
+                el.addEventListener('mouseup', () => cursor.classList.remove('click'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('click'));
+            });
+        }
+
+        function initMobileNav() {
+            const mobileToggle = document.getElementById('mobileMenu');
+            const navMenu = document.getElementById('navMenu');
+
+            mobileToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                mobileToggle.innerHTML = navMenu.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        }
+
+        function initScrollEffects() {
+            const navbar = document.querySelector('header');
+            const backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) {
+                    navbar.style.padding = '6px 0';
+                    navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+                } else {
+                    navbar.style.padding = '8px 0';
+                    navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                }
+
+                if (window.scrollY > 200) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+
+                animateStats();
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 60,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const rect = stat.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0 && !stat.classList.contains('animated')) {
+                    const target = parseInt(stat.getAttribute('data-count'));
+                    const duration = 1500;
+                    const increment = target / (duration / 16);
+                    let current = 0;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            stat.textContent = target;
+                            clearInterval(timer);
+                            stat.classList.add('animated');
+                        } else {
+                            stat.textContent = Math.floor(current);
+                        }
+                    }, 16);
+                }
+            });
+        }
+
+        function initInteractiveElements() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(`${tabId}-content`).classList.add('active');
+                });
+            });
+
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const address = button.getAttribute('data-address');
+                    navigator.clipboard.writeText(address).then(() => {
+                        showNotification('Address copied to clipboard!', 'success');
+                    }).catch(err => {
+                        showNotification('Failed to copy address', 'error');
+                    });
+                });
+            });
+
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    showNotification('Secure message sent successfully!', 'success');
+                    contactForm.reset();
+                });
+            }
+
+            let currentSlide = 0;
+            const carouselTrack = document.getElementById('carouselTrack');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dotsContainer = document.getElementById('carouselDots');
+
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('carousel-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+
+            function updateCarousel() {
+                carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateCarousel();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateCarousel();
+            }
+
+            function goToSlide(index) {
+                currentSlide = index;
+                updateCarousel();
+            }
+
+            document.querySelector('.carousel-nav.next').addEventListener('click', nextSlide);
+            document.querySelector('.carousel-nav.prev').addEventListener('click', prevSlide);
+
+            setInterval(nextSlide, 4000);
+
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    accordionItems.forEach(i => i.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                const icon = document.querySelector('#themeToggle i');
+                icon.className = document.body.classList.contains('light-theme') 
+                    ? 'fas fa-moon' 
+                    : 'fas fa-sun';
+            });
+        }
+
+        function initPentestSimulator() {
+            const scanButtons = document.querySelectorAll('.simulator-btn');
+            const scanOutput = document.getElementById('scanOutput');
+            const scanProgress = document.getElementById('scanProgress');
+            const vulnList = document.getElementById('vulnList');
+            const researchResults = document.getElementById('researchResults');
+            const startResearchBtn = document.getElementById('startResearch');
+            const analyzeVulnBtn = document.getElementById('analyzeVuln');
+            const targetInput = document.getElementById('targetInput');
+            const vulnType = document.getElementById('vulnType');
+            const threatCount = document.getElementById('threatCount');
+            const scanCount = document.getElementById('scanCount');
+            const vulnCount = document.getElementById('vulnCount');
+            const monitorLog = document.getElementById('monitorLog');
+
+            let scanCounter = 0;
+            let threatCounter = 0;
+
+            const scanTypes = {
+                sql: {
+                    name: 'SQL Injection Scan',
+                    steps: [
+                        '[INFO] Starting SQL Injection scan...',
+                        '[SCAN] Testing for boolean-based SQLi',
+                        '[SCAN] Testing for time-based SQLi',
+                        '[SCAN] Testing for union-based SQLi',
+                        '[SCAN] Testing for error-based SQLi',
+                        '[FOUND] SQL Injection vulnerability detected in login form',
+                        '[SUCCESS] Scan completed - 1 vulnerability found'
+                    ]
+                },
+                xss: {
+                    name: 'XSS Testing',
+                    steps: [
+                        '[INFO] Starting XSS vulnerability scan...',
+                        '[SCAN] Testing for reflected XSS',
+                        '[SCAN] Testing for stored XSS',
+                        '[SCAN] Testing for DOM-based XSS',
+                        '[SCAN] Analyzing input parameters',
+                        '[FOUND] Reflected XSS detected in search parameter',
+                        '[SUCCESS] Scan completed - 1 vulnerability found'
+                    ]
+                },
+                csrf: {
+                    name: 'CSRF Detection',
+                    steps: [
+                        '[INFO] Starting CSRF vulnerability scan...',
+                        '[SCAN] Checking for anti-CSRF tokens',
+                        '[SCAN] Analyzing form submissions',
+                        '[SCAN] Testing state-changing requests',
+                        '[SCAN] Verifying same-origin policy',
+                        '[INFO] No CSRF vulnerabilities detected',
+                        '[SUCCESS] Scan completed - 0 vulnerabilities found'
+                    ]
+                },
+                full: {
+                    name: 'Full Security Scan',
+                    steps: [
+                        '[INFO] Starting comprehensive security scan...',
+                        '[SCAN] SQL Injection testing...',
+                        '[SCAN] XSS vulnerability assessment...',
+                        '[SCAN] CSRF detection...',
+                        '[SCAN] File upload testing...',
+                        '[SCAN] API security assessment...',
+                        '[FOUND] Multiple vulnerabilities detected',
+                        '[SUCCESS] Scan completed - 3 vulnerabilities found'
+                    ]
+                }
+            };
+
+            scanButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    scanButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const scanType = btn.getAttribute('data-scan');
+                    const scan = scanTypes[scanType];
+                    
+                    scanOutput.innerHTML = '';
+                    scanProgress.style.width = '0%';
+                    
+                    let step = 0;
+                    const interval = setInterval(() => {
+                        if (step < scan.steps.length) {
+                            const line = document.createElement('div');
+                            line.className = 'output-line';
+                            
+                            if (scan.steps[step].includes('[FOUND]')) {
+                                line.classList.add('warning');
+                            } else if (scan.steps[step].includes('[SUCCESS]')) {
+                                line.classList.add('success');
+                            } else if (scan.steps[step].includes('[ERROR]')) {
+                                line.classList.add('error');
+                            } else {
+                                line.classList.add('info');
+                            }
+                            
+                            line.textContent = scan.steps[step];
+                            scanOutput.appendChild(line);
+                            scanOutput.scrollTop = scanOutput.scrollHeight;
+                            
+                            const progress = ((step + 1) / scan.steps.length) * 100;
+                            scanProgress.style.width = `${progress}%`;
+                            
+                            step++;
+                        } else {
+                            clearInterval(interval);
+                            scanCounter++;
+                            scanCount.textContent = scanCounter;
+                            
+                            if (scanType === 'full') {
+                                threatCounter += 3;
+                                threatCount.textContent = threatCounter;
+                                vulnCount.textContent = parseInt(vulnCount.textContent) + 3;
+                                
+                                const newVulns = [
+                                    {
+                                        title: 'SQL Injection Vulnerability',
+                                        desc: 'High risk SQL injection in user registration',
+                                        severity: 'high'
+                                    },
+                                    {
+                                        title: 'XSS Vulnerability',
+                                        desc: 'Reflected XSS in search functionality',
+                                        severity: 'medium'
+                                    },
+                                    {
+                                        title: 'Insecure Direct Object Reference',
+                                        desc: 'IDOR vulnerability in user profiles',
+                                        severity: 'medium'
+                                    }
+                                ];
+                                
+                                newVulns.forEach(vuln => {
+                                    const vulnItem = document.createElement('div');
+                                    vulnItem.className = 'vuln-item';
+                                    vulnItem.innerHTML = `
+                                        <div class="vuln-title">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            ${vuln.title}
+                                        </div>
+                                        <div class="vuln-description">
+                                            ${vuln.desc}
+                                        </div>
+                                        <span class="vuln-severity severity-${vuln.severity}">${vuln.severity.toUpperCase()}</span>
+                                    `;
+                                    vulnList.appendChild(vulnItem);
+                                });
+                                
+                                const logEntry = document.createElement('div');
+                                logEntry.className = 'log-entry';
+                                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+                                logEntry.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-message log-threat"> Full scan completed - 3 threats detected</span>`;
+                                monitorLog.appendChild(logEntry);
+                                monitorLog.scrollTop = monitorLog.scrollHeight;
+                            }
+                        }
+                    }, 600);
+                });
+            });
+
+            startResearchBtn.addEventListener('click', () => {
+                const target = targetInput.value || 'example.com';
+                researchResults.innerHTML = '';
+                
+                const steps = [
+                    '[ZERO-DAY LAB] Starting research on target: ' + target,
+                    '[INFO] Gathering target information...',
+                    '[INFO] Analyzing application structure...',
+                    '[INFO] Identifying potential attack vectors...',
+                    '[INFO] Setting up fuzzing environment...',
+                    '[INFO] Beginning vulnerability research...',
+                    '[INFO] Research initialized - ready for detailed analysis'
+                ];
+                
+                steps.forEach((step, index) => {
+                    setTimeout(() => {
+                        const line = document.createElement('div');
+                        line.className = 'output-line info';
+                        line.textContent = step;
+                        researchResults.appendChild(line);
+                        researchResults.scrollTop = researchResults.scrollHeight;
+                    }, index * 500);
+                });
+            });
+
+            analyzeVulnBtn.addEventListener('click', () => {
+                const type = vulnType.value || 'unknown';
+                researchResults.innerHTML = '';
+                
+                const steps = [
+                    '[ANALYSIS] Analyzing vulnerability type: ' + type,
+                    '[INFO] Creating proof-of-concept...',
+                    '[INFO] Testing exploit reliability...',
+                    '[INFO] Documenting attack vectors...',
+                    '[INFO] Assessing potential impact...',
+                    '[INFO] Preparing mitigation recommendations...',
+                    '[SUCCESS] Analysis complete - report generated'
+                ];
+                
+                steps.forEach((step, index) => {
+                    setTimeout(() => {
+                        const line = document.createElement('div');
+                        line.className = 'output-line info';
+                        if (step.includes('[SUCCESS]')) line.classList.add('success');
+                        line.textContent = step;
+                        researchResults.appendChild(line);
+                        researchResults.scrollTop = researchResults.scrollHeight;
+                    }, index * 500);
+                });
+            });
+
+            setInterval(() => {
+                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+                const logs = [
+                    `[${time}] System monitoring active`,
+                    `[${time}] Network traffic analysis`,
+                    `[${time}] Security checks completed`,
+                    `[${time}] Threat database updated`
+                ];
+                
+                const randomLog = logs[Math.floor(Math.random() * logs.length)];
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                logEntry.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-message log-normal"> ${randomLog.split('] ')[1]}</span>`;
+                
+                if (monitorLog.children.length > 5) {
+                    monitorLog.removeChild(monitorLog.firstChild);
+                }
+                monitorLog.appendChild(logEntry);
+                monitorLog.scrollTop = monitorLog.scrollHeight;
+            }, 10000);
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification';
+            
+            if (type === 'success') {
+                notification.style.background = 'var(--primary)';
+            } else if (type === 'error') {
+                notification.style.background = 'var(--secondary)';
+            } else if (type === 'warning') {
+                notification.style.background = 'var(--accent)';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        function initAnimations() {
+            if (typeof gsap !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                gsap.utils.toArray('.skill-card, .service-card, .stat-card, .project-card, .tool-card, .timeline-content').forEach(element => {
+                    gsap.from(element, {
+                        scrollTrigger: {
+                            trigger: element,
+                            start: 'top 85%',
+                            end: 'bottom 15%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        y: 20,
+                        opacity: 0,
+                        duration: 0.6,
+                        ease: 'power2.out'
+                    });
+                });
+
+                gsap.from('.hero h1, .hero h2, .hero p, .badges, .buttons', {
+                    duration: 1,
+                    y: 20,
+                    opacity: 0,
+                    stagger: 0.15,
+                    ease: 'power3.out'
+                });
+            }
+        }
+
+        function initGridLines() {
+            const gridLines = document.getElementById('gridLines');
+            const lineSpacing = 30;
+
+            for (let i = 0; i < window.innerWidth; i += lineSpacing) {
+                const verticalLine = document.createElement('div');
+                verticalLine.className = 'grid-line vertical';
+                verticalLine.style.left = i + 'px';
+                gridLines.appendChild(verticalLine);
+            }
+
+            for (let i = 0; i < window.innerHeight; i += lineSpacing) {
+                const horizontalLine = document.createElement('div');
+                horizontalLine.className = 'grid-line horizontal';
+                horizontalLine.style.top = i + 'px';
+                gridLines.appendChild(horizontalLine);
+            }
+        }
+
+        function initMorphingBg() {
+            const morphingBg = document.getElementById('morphingBg');
+            const colors = ['#0066ff', '#ff0055', '#00ff88'];
+            
+            for (let i = 0; i < 3; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'morphing-shape';
+                shape.style.width = Math.random() * 150 + 80 + 'px';
+                shape.style.height = shape.style.width;
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.top = Math.random() * 100 + '%';
+                shape.style.background = colors[Math.floor(Math.random() * colors.length)];
+                shape.style.animationDelay = Math.random() * 12 + 's';
+                morphingBg.appendChild(shape);
+            }
+        }
+
+        function initMatrixRain() {
+            const matrixRain = document.getElementById('matrixRain');
+            if (window.innerWidth <= 768) return;
+
+            const chars = "01";
+            const fontSize = 10;
+            const columns = Math.floor(window.innerWidth / fontSize);
+            const drops = new Array(columns).fill(1);
+
+            function drawMatrix() {
+                const ctx = document.createElement('canvas').getContext('2d');
+                ctx.canvas.width = window.innerWidth;
+                ctx.canvas.height = window.innerHeight;
+                matrixRain.appendChild(ctx.canvas);
+
+                function draw() {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
+                    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+                    ctx.fillStyle = '#0F0';
+                    ctx.font = `${fontSize}px monospace`;
+
+                    for (let i = 0; i < drops.length; i++) {
+                        const text = chars[Math.floor(Math.random() * chars.length)];
+                        const x = i * fontSize;
+                        const y = drops[i] * fontSize;
+
+                        ctx.fillStyle = `rgba(0, 255, 0, ${Math.random() * 0.15 + 0.08})`;
+                        ctx.fillText(text, x, y);
+
+                        if (y > ctx.canvas.height && Math.random() > 0.975) {
+                            drops[i] = 0;
+                        }
+                        drops[i]++;
+                    }
+                }
+
+                setInterval(draw, 50);
+            }
+
+            drawMatrix();
+        }
+
+        function createFloatingShapes() {
+            const colors = ['#0066ff', '#ff0055', '#00ff88'];
+            const container = document.body;
+
+            for (let i = 0; i < 2; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'floating-shape';
+                
+                const size = Math.random() * 120 + 40;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+                shape.style.background = color;
+                shape.style.left = `${Math.random() * 100}vw`;
+                shape.style.top = `${Math.random() * 100}vh`;
+                
+                container.appendChild(shape);
+
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(shape, {
+                        x: Math.random() * 80 - 40,
+                        y: Math.random() * 80 - 40,
+                        duration: Math.random() * 8 + 6,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                }
+            }
+        }
+
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.closest('.address') || e.target.closest('.code-block') || e.target.closest('.simulator-output') || e.target.closest('.lab-results')) {
+                e.preventDefault();
+                showNotification('Security feature: Copy protection active', 'warning');
+            }
+        });
+
+        // مراقبة تغييرات العنوان URL
+        let lastUrl = location.href;
+        new MutationObserver(() => {
+            const url = location.href;
+            if (url !== lastUrl) {
+                lastUrl = url;
+                checkForProtectedAccess();
+            }
+        }).observe(document, {subtree: true, childList: true});
+
+        window.addEventListener('load', () => {
+            console.log('SeCuriTy-Ms Platform Loaded Successfully');
+            console.log('Version: 2026.1.0 Elite Edition');
+            console.log('Experience: 4+ Years | Projects: 35');
+            console.log('Penetration Testing Tools: Active');
+            console.log('Protection System: Active');
+            console.log('All systems operational');
+        });
+
+        window.addEventListener('resize', () => {
+            const cursor = document.getElementById('customCursor');
+            if (window.innerWidth <= 768) {
+                cursor.style.display = 'none';
+                document.body.classList.add('show-cursor');
+            } else {
+                cursor.style.display = 'block';
+                document.body.classList.remove('show-cursor');
+            }
+        });
+
+        setTimeout(animateStats, 300);
+        
+        // إضافة أنماط للجسيمات العائمة
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+                25% { transform: translate(10px, -10px) rotate(90deg); opacity: 0.5; }
+                50% { transform: translate(-5px, 5px) rotate(180deg); opacity: 0.7; }
+                75% { transform: translate(-10px, -5px) rotate(270deg); opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+  </html>
