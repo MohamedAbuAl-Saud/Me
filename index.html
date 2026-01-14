@@ -282,180 +282,6 @@
             opacity: 0.7;
         }
 
-        /* Live Attack Map */
-        .attack-map {
-            background: rgba(0, 0, 0, 0.95);
-            border-radius: 8px;
-            padding: 25px;
-            border: 2px solid #0066ff;
-            box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
-            backdrop-filter: blur(10px);
-            margin-top: 20px;
-        }
-
-        .map-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
-        }
-
-        .map-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .map-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--accent);
-            animation: pulse 2s infinite;
-        }
-
-        .status-text {
-            color: var(--accent);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .world-map {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            margin-bottom: 20px;
-        }
-
-        .map-point {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--primary);
-            transform: translate(-50%, -50%);
-            animation: mapPulse 2s infinite;
-        }
-
-        .map-point.red {
-            background: var(--secondary);
-        }
-
-        .map-point.green {
-            background: var(--accent);
-        }
-
-        .map-point.orange {
-            background: #ffaa00;
-        }
-
-        .attack-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 15px;
-            background: rgba(0, 102, 255, 0.05);
-            border-radius: 6px;
-            border: 1px solid rgba(0, 102, 255, 0.1);
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--accent);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .attack-log {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 6px;
-            padding: 15px;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            line-height: 1.4;
-            height: 150px;
-            overflow-y: auto;
-        }
-
-        .log-entry {
-            margin-bottom: 5px;
-            color: #ccc;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .log-time {
-            color: #666;
-            min-width: 70px;
-        }
-
-        .log-type {
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 9px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .log-type.alert {
-            background: rgba(255, 0, 85, 0.1);
-            color: var(--secondary);
-        }
-
-        .log-type.warning {
-            background: rgba(255, 170, 0, 0.1);
-            color: #ffaa00;
-        }
-
-        .log-type.info {
-            background: rgba(0, 102, 255, 0.1);
-            color: var(--primary);
-        }
-
-        .log-type.success {
-            background: rgba(0, 255, 136, 0.1);
-            color: var(--accent);
-        }
-
-        .log-message {
-            flex: 1;
-        }
-
-        @keyframes mapPulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 102, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
-        }
-
         /* Existing styles remain unchanged */
         :root {
             --primary: #0066ff;
@@ -1561,10 +1387,6 @@
                 bottom: 15px;
                 right: 15px;
             }
-            
-            .attack-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 576px) {
@@ -1620,10 +1442,6 @@
             
             .loading-text p {
                 font-size: 9px;
-            }
-            
-            .attack-stats {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -2851,8 +2669,8 @@
                 <a href="#research" class="btn btn-secondary">
                     <i class="fas fa-crosshairs"></i> Security Research
                 </a>
-                <a href="#quiz" class="btn btn-learn">
-                    <i class="fas fa-brain"></i> Test Your Security Knowledge
+                <a href="https://mohamedabual-saud.github.io/OurcoursesMs/" target="_blank" class="btn btn-learn">
+                    <i class="fas fa-graduation-cap"></i> دوراتنا - تعلم من الصفر
                 </a>
             </div>
         </div>
@@ -3215,65 +3033,6 @@
                     <input type="text" class="terminal-command" id="terminalInput" placeholder="Type command...">
                 </div>
             </div>
-            
-            <!-- Live Attack Map -->
-            <div class="attack-map">
-                <div class="map-header">
-                    <div class="map-title">
-                        <i class="fas fa-globe-americas"></i> Global Security Threat Map
-                    </div>
-                    <div class="map-status">
-                        <div class="status-dot"></div>
-                        <span class="status-text">LIVE MONITORING</span>
-                    </div>
-                </div>
-                
-                <div class="world-map" id="worldMap">
-                    <!-- Attack points will be dynamically added here -->
-                </div>
-                
-                <div class="attack-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="attacksBlocked">1,247</div>
-                        <div class="stat-label">Attacks Blocked</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="activeThreats">12</div>
-                        <div class="stat-label">Active Threats</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="systemsProtected">156</div>
-                        <div class="stat-label">Systems Protected</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="responseTime">0.8s</div>
-                        <div class="stat-label">Response Time</div>
-                    </div>
-                </div>
-                
-                <div class="attack-log" id="attackLog">
-                    <div class="log-entry">
-                        <span class="log-time">12:45:23</span>
-                        <span class="log-type info">INFO</span>
-                        <span class="log-message">Security systems initialized</span>
-                    </div>
-                    <div class="log-entry">
-                        <span class="log-time">12:46:01</span>
-                        <span class="log-type alert">ALERT</span>
-                        <span class="log-message">Potential SQL injection attempt detected from 192.168.1.45</span>
-                    </div>
-                    <div class="log-entry">
-                        <span class="log-time">12:46:35</span>
-                        <span class="log-type success">SUCCESS</span>
-                        <span class="log-message">Attack blocked successfully</span>
-                    </div>
-                    <div class="log-entry">
-                        <span class="log-time">12:47:12</span>
-                        <span class="log-type warning">WARNING</span>
-                        <span class="log-message">Port scan detected from 10.0.0.23</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -3601,6 +3360,18 @@
                     </button>
                     <p class="donation-note">TON Network</p>
                 </div>
+                
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fab fa-binance"></i>
+                    </div>
+                    <h3 class="support-title">Binance ID</h3>
+                    <div class="donation-address">1124998727</div>
+                    <button class="copy-btn" data-address="1124998727">
+                        <i class="fas fa-copy"></i> Copy ID
+                    </button>
+                    <p class="donation-note">Binance Account ID</p>
+                </div>
             </div>
             <div style="text-align: center; margin-top: 30px;">
                 <p style="color: #aaa; font-size: 12px;">
@@ -3879,7 +3650,6 @@
             initMatrixRain();
             createFloatingShapes();
             initTerminal();
-            initAttackMap();
             initQuiz();
             initAssistanceForm();
         }
@@ -4008,110 +3778,6 @@
             });
 
             terminalInput.focus();
-        }
-
-        function initAttackMap() {
-            const worldMap = document.getElementById('worldMap');
-            const attacksBlocked = document.getElementById('attacksBlocked');
-            const activeThreats = document.getElementById('activeThreats');
-            const systemsProtected = document.getElementById('systemsProtected');
-            const responseTime = document.getElementById('responseTime');
-            const attackLog = document.getElementById('attackLog');
-
-            const attackTypes = [
-                { type: 'red', label: 'High Threat' },
-                { type: 'orange', label: 'Medium Threat' },
-                { type: 'green', label: 'Low Threat' }
-            ];
-
-            const cities = [
-                { name: 'New York', x: 25, y: 35 },
-                { name: 'London', x: 48, y: 32 },
-                { name: 'Tokyo', x: 80, y: 40 },
-                { name: 'Dubai', x: 58, y: 45 },
-                { name: 'Singapore', x: 72, y: 58 },
-                { name: 'Sydney', x: 85, y: 70 },
-                { name: 'San Francisco', x: 15, y: 40 },
-                { name: 'Frankfurt', x: 50, y: 35 },
-                { name: 'Mumbai', x: 65, y: 48 },
-                { name: 'São Paulo', x: 32, y: 65 }
-            ];
-
-            cities.forEach(city => {
-                const point = document.createElement('div');
-                point.className = 'map-point';
-                const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)];
-                point.classList.add(attackType.type);
-                point.style.left = `${city.x}%`;
-                point.style.top = `${city.y}%`;
-                point.style.animationDelay = `${Math.random() * 2}s`;
-                point.title = `${city.name} - ${attackType.label}`;
-                worldMap.appendChild(point);
-            });
-
-            let blockedCount = 1247;
-            let threatCount = 12;
-            let protectedCount = 156;
-
-            function updateStats() {
-                blockedCount += Math.floor(Math.random() * 3);
-                threatCount = Math.max(3, Math.min(20, threatCount + Math.floor(Math.random() * 3) - 1));
-                protectedCount += Math.floor(Math.random() * 2);
-
-                attacksBlocked.textContent = blockedCount.toLocaleString();
-                activeThreats.textContent = threatCount;
-                systemsProtected.textContent = protectedCount;
-                responseTime.textContent = `${(0.7 + Math.random() * 0.3).toFixed(1)}s`;
-
-                if (Math.random() > 0.7) {
-                    addLogEntry();
-                }
-            }
-
-            function addLogEntry() {
-                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                const types = [
-                    { type: 'alert', message: `Potential SQL injection attempt detected from ${getRandomIP()}` },
-                    { type: 'warning', message: `Port scan detected from ${getRandomIP()}` },
-                    { type: 'info', message: `Security systems performing routine scan` },
-                    { type: 'success', message: `Attack blocked successfully` },
-                    { type: 'warning', message: `Unusual traffic pattern detected from ${getRandomIP()}` }
-                ];
-
-                const logType = types[Math.floor(Math.random() * types.length)];
-                
-                const logEntry = document.createElement('div');
-                logEntry.className = 'log-entry';
-                logEntry.innerHTML = `
-                    <span class="log-time">${time}</span>
-                    <span class="log-type ${logType.type}">${logType.type.toUpperCase()}</span>
-                    <span class="log-message">${logType.message}</span>
-                `;
-                
-                attackLog.prepend(logEntry);
-                
-                if (attackLog.children.length > 8) {
-                    attackLog.removeChild(attackLog.lastChild);
-                }
-            }
-
-            function getRandomIP() {
-                return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
-            }
-
-            setInterval(updateStats, 3000);
-            setInterval(() => {
-                const points = document.querySelectorAll('.map-point');
-                points.forEach(point => {
-                    if (Math.random() > 0.8) {
-                        const type = attackTypes[Math.floor(Math.random() * attackTypes.length)];
-                        point.className = 'map-point';
-                        point.classList.add(type.type);
-                    }
-                });
-            }, 5000);
-
-            updateStats();
         }
 
         // Security Quiz Implementation
@@ -4828,7 +4494,7 @@
         }
 
         document.addEventListener('contextmenu', (e) => {
-            if (e.target.closest('.address') || e.target.closest('.code-block') || e.target.closest('.attack-log') || e.target.closest('.donation-address')) {
+            if (e.target.closest('.address') || e.target.closest('.code-block') || e.target.closest('.donation-address')) {
                 e.preventDefault();
                 showNotification('Security feature: Copy protection active', 'warning');
             }
