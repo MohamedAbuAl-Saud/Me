@@ -2167,306 +2167,198 @@
             opacity: 0.2;
         }
 
-        /* Penetration Testing Simulator */
-        .pentest-simulator {
-            background: rgba(0, 0, 0, 0.8);
+        /* Cyber Command Center Styles */
+        .cyber-command {
+            background: rgba(0, 0, 0, 0.95);
             border-radius: 8px;
-            padding: 15px;
-            border: 1px solid var(--primary);
-            backdrop-filter: blur(5px);
+            padding: 20px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
-        .simulator-header {
+        .command-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
         }
 
-        .simulator-title {
+        .command-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            color: var(--primary);
-        }
-
-        .simulator-status {
+            font-size: 18px;
+            color: var(--accent);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
         }
 
-        .status-indicator {
-            width: 8px;
-            height: 8px;
+        .command-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: var(--accent);
             animation: pulse 2s infinite;
         }
 
         .status-text {
-            font-size: 10px;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .command-module {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 6px;
+            padding: 15px;
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .command-module:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 102, 255, 0.1);
+        }
+
+        .module-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+        }
+
+        .module-title {
+            font-size: 14px;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .module-content {
+            color: #ccc;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .command-output {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 6px;
+            padding: 15px;
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            height: 150px;
+            overflow-y: auto;
+        }
+
+        .output-line {
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        .output-line.system {
             color: var(--accent);
         }
 
-        .simulator-controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+        .output-line.security {
+            color: #ff0055;
         }
 
-        .simulator-btn {
-            padding: 6px 12px;
+        .output-line.network {
+            color: #0066ff;
+        }
+
+        .output-line.success {
+            color: #00ff88;
+        }
+
+        .command-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .command-btn {
+            padding: 8px 15px;
             background: rgba(0, 102, 255, 0.1);
             border: 1px solid rgba(0, 102, 255, 0.3);
             border-radius: 4px;
             color: var(--primary);
-            font-size: 10px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        .simulator-btn:hover {
+        .command-btn:hover {
             background: rgba(0, 102, 255, 0.2);
             transform: translateY(-1px);
         }
 
-        .simulator-btn.active {
+        .command-btn.active {
             background: var(--primary);
             color: white;
         }
 
-        .simulator-output {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 9px;
-            line-height: 1.3;
-            height: 120px;
-            overflow-y: auto;
-            border: 1px solid rgba(0, 102, 255, 0.1);
-        }
-
-        .output-line {
-            margin-bottom: 4px;
-            color: #ccc;
-        }
-
-        .output-line.success {
-            color: var(--accent);
-        }
-
-        .output-line.warning {
-            color: #ff9900;
-        }
-
-        .output-line.error {
-            color: var(--secondary);
-        }
-
-        .output-line.info {
-            color: var(--primary);
-        }
-
-        .vulnerability-scanner {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid var(--secondary);
-            backdrop-filter: blur(5px);
-        }
-
-        .scanner-progress {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .scanner-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            border-radius: 2px;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .vulnerability-list {
+        .system-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
             margin-top: 15px;
         }
 
-        .vuln-item {
-            padding: 8px;
-            background: rgba(255, 0, 85, 0.1);
-            border-radius: 4px;
-            margin-bottom: 8px;
-            border-left: 2px solid var(--secondary);
-        }
-
-        .vuln-title {
-            font-size: 11px;
-            color: var(--secondary);
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .vuln-description {
-            font-size: 9px;
-            color: #ccc;
-            line-height: 1.3;
-        }
-
-        .vuln-severity {
-            display: inline-block;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 8px;
-            font-weight: bold;
-            margin-top: 4px;
-        }
-
-        .severity-high {
-            background: rgba(255, 0, 85, 0.2);
-            color: var(--secondary);
-        }
-
-        .severity-medium {
-            background: rgba(255, 153, 0, 0.2);
-            color: #ff9900;
-        }
-
-        .severity-low {
-            background: rgba(0, 102, 255, 0.2);
-            color: var(--primary);
-        }
-
-        .zero-day-lab {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid var(--accent);
-            backdrop-filter: blur(5px);
-        }
-
-        .lab-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .lab-input {
-            width: 100%;
-            padding: 6px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 4px;
-            color: var(--light);
-            font-size: 10px;
-        }
-
-        .lab-btn {
-            padding: 6px;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 4px;
-            color: var(--accent);
-            font-size: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .lab-btn:hover {
-            background: rgba(0, 255, 136, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .lab-results {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 9px;
-            line-height: 1.3;
-            height: 100px;
-            overflow-y: auto;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-        }
-
-        /* Real-time Monitoring */
-        .monitor-panel {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 8px;
-            padding: 15px;
-            border: 1px solid var(--primary);
-            backdrop-filter: blur(5px);
-        }
-
-        .monitor-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .monitor-stat {
+        .metric {
             text-align: center;
-            padding: 8px;
-            background: rgba(0, 102, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .stat-value {
-            font-size: 16px;
-            font-weight: 900;
-            color: var(--accent);
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 9px;
-            color: #aaa;
-        }
-
-        .monitor-log {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
             padding: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 9px;
-            line-height: 1.3;
-            height: 100px;
-            overflow-y: auto;
+            background: rgba(0, 102, 255, 0.05);
+            border-radius: 4px;
             border: 1px solid rgba(0, 102, 255, 0.1);
         }
 
-        .log-entry {
-            margin-bottom: 4px;
-            padding: 4px;
-            border-radius: 2px;
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .log-time {
-            color: #aaa;
-            font-size: 8px;
-        }
-
-        .log-message {
-            color: #ccc;
-        }
-
-        .log-threat {
-            color: var(--secondary);
-        }
-
-        .log-normal {
+        .metric-value {
+            font-size: 16px;
+            font-weight: 900;
             color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 9px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -2532,11 +2424,10 @@
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
-                <a href="#pentest">PenTesting</a>
+                <a href="#cyber">Cyber Command</a>
                 <a href="#projects">Projects</a>
                 <a href="#tools">Tools</a>
                 <a href="#services">Services</a>
-                <a href="#research">Research</a>
                 <a href="#contact">Contact</a>
                 <a href="#support">Support</a>
                 <a href="#help">Help</a>
@@ -2565,8 +2456,8 @@
                 <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-primary hologram-effect">
                     <i class="fab fa-telegram"></i> View Projects on Telegram
                 </a>
-                <a href="#pentest" class="btn btn-secondary">
-                    <i class="fas fa-crosshairs"></i> Try PenTesting Tools
+                <a href="#cyber" class="btn btn-secondary">
+                    <i class="fas fa-crosshairs"></i> Access Cyber Command
                 </a>
                 <a href="https://mohamedabual-saud.github.io/OurcoursesMs" target="_blank" class="btn btn-learn">
                     <i class="fas fa-graduation-cap"></i> Start Learning From Scratch
@@ -2619,42 +2510,39 @@
         <div class="container">
             <h2 class="section-title">About The Leader</h2>
             <div class="about-content">
-                <!-- Interactive Terminal Simulator -->
-                <div class="interactive-terminal">
-                    <div class="terminal-header">
-                        <div class="terminal-title">SeCuriTy-Ms Terminal v2.0</div>
-                        <div class="terminal-controls">
-                            <div class="terminal-btn close"></div>
-                            <div class="terminal-btn minimize"></div>
-                            <div class="terminal-btn maximize"></div>
-                        </div>
+                <!-- Original Terminal -->
+                <div class="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">root@security-ms:~#</span>
+                        <span class="terminal-command"> whoami</span>
                     </div>
-                    <div class="terminal-output" id="terminalOutput">
-                        <div class="terminal-line">
-                            <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
-                            <span class="terminal-command">welcome</span>
-                        </div>
-                        <div class="terminal-response terminal-info">
-                            Welcome to SeCuriTy-Ms Interactive Terminal
-                            Type 'help' to see available commands
-                        </div>
-                        <div class="terminal-line">
-                            <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
-                            <span class="terminal-command">help</span>
-                        </div>
-                        <div class="terminal-response terminal-info">
-                            Available commands:
-                            - whoami: Show user information
-                            - about: Learn about SeCuriTy-Ms
-                            - skills: View technical skills
-                            - projects: List security projects
-                            - clear: Clear terminal screen
-                            - help: Show this help message
-                        </div>
+                    <div class="terminal-line terminal-output">
+                        User: Al-Qiyadah Al-Zaeem (The Leadership Leader)
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        Real Name: Mohamed Abu Al-Saud
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        Role: Red Team Leader | Offensive Security Specialist
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        Experience: 4+ Years in Cybersecurity | 35 Projects
                     </div>
                     <div class="terminal-line">
-                        <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
-                        <input type="text" class="terminal-command" id="terminalInput" autocomplete="off" autofocus>
+                        <span class="terminal-prompt">root@security-ms:~#</span>
+                        <span class="terminal-command"> cat philosophy.txt</span>
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        "I possess an analytical and strategic mindset focused on systematic attacks, breaking systems, and understanding vulnerabilities from the roots. I started my journey in this field at an early age out of curiosity, which turned into knowledge and then into professional expertise."
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        "Specializing in systematic attacks, vulnerability analysis, and realistic attack simulations."
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        "I work on implementing and building complete Red Team scenarios including: Network Penetration Testing, signal and communications analysis, vulnerability mapping and entry points, and advanced AI-powered attack simulations."
+                    </div>
+                    <div class="terminal-line terminal-output">
+                        "I develop accurate offensive systems and tools designed to be powerful, flexible, and easy to use, reflecting my deep understanding of real environments and target systems."
                     </div>
                 </div>
                 
@@ -2894,110 +2782,130 @@
         </div>
     </section>
 
-    <!-- Penetration Testing Section -->
-    <section id="pentest" class="glass-effect">
+    <!-- Cyber Command Center Section -->
+    <section id="cyber" class="glass-effect">
         <div class="container">
-            <h2 class="section-title">Penetration Testing & Vulnerability Research</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                <div class="pentest-simulator">
-                    <div class="simulator-header">
-                        <h3 class="simulator-title">Web Vulnerability Scanner</h3>
-                        <div class="simulator-status">
-                            <div class="status-indicator"></div>
-                            <span class="status-text">Ready</span>
-                        </div>
+            <h2 class="section-title">Cyber Command Center</h2>
+            <div class="cyber-command">
+                <div class="command-header">
+                    <div class="command-title">
+                        <i class="fas fa-satellite-dish"></i>
+                        SeCuriTy-Ms Command Interface v3.0
                     </div>
-                    <div class="simulator-controls">
-                        <button class="simulator-btn active" data-scan="sql">SQL Injection</button>
-                        <button class="simulator-btn" data-scan="xss">XSS Testing</button>
-                        <button class="simulator-btn" data-scan="csrf">CSRF Detection</button>
-                        <button class="simulator-btn" data-scan="full">Full Scan</button>
-                    </div>
-                    <div class="simulator-output" id="scanOutput">
-                        <div class="output-line info">[INFO] Web Vulnerability Scanner initialized</div>
-                        <div class="output-line info">[INFO] Target: example.com</div>
-                        <div class="output-line info">[INFO] Ready to begin security assessment</div>
-                        <div class="output-line info">[INFO] Select a scan type to begin...</div>
+                    <div class="command-status">
+                        <div class="status-dot"></div>
+                        <span class="status-text">SYSTEMS ONLINE</span>
                     </div>
                 </div>
-                <div class="vulnerability-scanner">
-                    <h3 class="simulator-title">Vulnerability Assessment</h3>
-                    <div class="scanner-progress">
-                        <div class="scanner-progress-bar" id="scanProgress"></div>
-                    </div>
-                    <div class="vulnerability-list" id="vulnList">
-                        <div class="vuln-item">
-                            <div class="vuln-title">
-                                <i class="fas fa-exclamation-triangle"></i>
-                                SQL Injection Vulnerability
+                
+                <div class="command-grid">
+                    <div class="command-module">
+                        <div class="module-header">
+                            <div class="module-icon">
+                                <i class="fas fa-shield-alt"></i>
                             </div>
-                            <div class="vuln-description">
-                                Potential SQL injection point detected in login form
-                            </div>
-                            <span class="vuln-severity severity-high">HIGH</span>
+                            <div class="module-title">System Security Status</div>
                         </div>
-                        <div class="vuln-item">
-                            <div class="vuln-title">
-                                <i class="fas fa-exclamation-circle"></i>
-                                XSS Vulnerability
+                        <div class="module-content">
+                            All security systems operational. Threat level: LOW<br>
+                            Last scan: 2 minutes ago<br>
+                            Protected endpoints: 127<br>
+                            Active firewalls: 8<br>
+                            Encryption protocols: AES-256, RSA-4096
+                        </div>
+                    </div>
+                    
+                    <div class="command-module">
+                        <div class="module-header">
+                            <div class="module-icon">
+                                <i class="fas fa-network-wired"></i>
                             </div>
-                            <div class="vuln-description">
-                                Reflected XSS detected in search parameter
+                            <div class="module-title">Network Operations</div>
+                        </div>
+                        <div class="module-content">
+                            Network throughput: 2.4 Gbps<br>
+                            Connected devices: 42<br>
+                            Bandwidth usage: 67%<br>
+                            Latency: 12ms average<br>
+                            Packet loss: 0.02%
+                        </div>
+                    </div>
+                    
+                    <div class="command-module">
+                        <div class="module-header">
+                            <div class="module-icon">
+                                <i class="fas fa-database"></i>
                             </div>
-                            <span class="vuln-severity severity-medium">MEDIUM</span>
+                            <div class="module-title">Data Intelligence</div>
+                        </div>
+                        <div class="module-content">
+                            Active databases: 18<br>
+                            Total records: 2.4M<br>
+                            Data processed: 4.7TB<br>
+                            Encryption rate: 98.7%<br>
+                            Backup integrity: 100%
+                        </div>
+                    </div>
+                    
+                    <div class="command-module">
+                        <div class="module-header">
+                            <div class="module-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="module-title">AI Security Systems</div>
+                        </div>
+                        <div class="module-content">
+                            AI models active: 12<br>
+                            Threat detection accuracy: 99.3%<br>
+                            False positive rate: 0.7%<br>
+                            Learning iterations: 24,578<br>
+                            Response time: 0.8s
                         </div>
                     </div>
                 </div>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="zero-day-lab">
-                    <h3 class="simulator-title">Zero-Day Research Lab</h3>
-                    <div class="lab-controls">
-                        <input type="text" class="lab-input" placeholder="Target URL or IP" id="targetInput">
-                        <button class="lab-btn" id="startResearch">Start Research</button>
-                        <input type="text" class="lab-input" placeholder="Vulnerability type" id="vulnType">
-                        <button class="lab-btn" id="analyzeVuln">Analyze</button>
+                
+                <div class="command-output" id="commandOutput">
+                    <div class="output-line system">[SYSTEM] Cyber Command Center initialized...</div>
+                    <div class="output-line success">[SUCCESS] All security systems online</div>
+                    <div class="output-line network">[NETWORK] Establishing secure connections...</div>
+                    <div class="output-line success">[SUCCESS] Encrypted channels established</div>
+                    <div class="output-line system">[SYSTEM] Threat intelligence feed active</div>
+                    <div class="output-line security">[SECURITY] Monitoring 127 endpoints</div>
+                    <div class="output-line system">[SYSTEM] Ready for command input</div>
+                </div>
+                
+                <div class="system-metrics">
+                    <div class="metric">
+                        <div class="metric-value" id="uptimeMetric">99.98%</div>
+                        <div class="metric-label">Uptime</div>
                     </div>
-                    <div class="lab-results" id="researchResults">
-                        <div class="output-line info">[ZERO-DAY LAB] Initialized</div>
-                        <div class="output-line info">[INFO] Ready for vulnerability research</div>
-                        <div class="output-line info">[INFO] Enter target and vulnerability type to begin</div>
+                    <div class="metric">
+                        <div class="metric-value" id="threatsMetric">0</div>
+                        <div class="metric-label">Active Threats</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" id="bandwidthMetric">2.4G</div>
+                        <div class="metric-label">Bandwidth</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value" id="responseMetric">0.8s</div>
+                        <div class="metric-label">Response Time</div>
                     </div>
                 </div>
-                <div class="monitor-panel">
-                    <h3 class="simulator-title">Real-time Security Monitor</h3>
-                    <div class="monitor-stats">
-                        <div class="monitor-stat">
-                            <div class="stat-value" id="threatCount">0</div>
-                            <div class="stat-label">Threats</div>
-                        </div>
-                        <div class="monitor-stat">
-                            <div class="stat-value" id="scanCount">0</div>
-                            <div class="stat-label">Scans</div>
-                        </div>
-                        <div class="monitor-stat">
-                            <div class="stat-value" id="vulnCount">2</div>
-                            <div class="stat-label">Vulnerabilities</div>
-                        </div>
-                        <div class="monitor-stat">
-                            <div class="stat-value" id="uptime">100%</div>
-                            <div class="stat-label">Uptime</div>
-                        </div>
-                    </div>
-                    <div class="monitor-log" id="monitorLog">
-                        <div class="log-entry">
-                            <span class="log-time">[12:30:45]</span>
-                            <span class="log-message"> System initialized</span>
-                        </div>
-                        <div class="log-entry">
-                            <span class="log-time">[12:31:10]</span>
-                            <span class="log-message log-threat"> High severity threat detected</span>
-                        </div>
-                        <div class="log-entry">
-                            <span class="log-time">[12:31:25]</span>
-                            <span class="log-message log-normal"> Security scan completed</span>
-                        </div>
-                    </div>
+                
+                <div class="command-controls">
+                    <button class="command-btn" id="scanBtn">
+                        <i class="fas fa-search"></i> System Scan
+                    </button>
+                    <button class="command-btn" id="defenseBtn">
+                        <i class="fas fa-shield-alt"></i> Defense Systems
+                    </button>
+                    <button class="command-btn" id="intelBtn">
+                        <i class="fas fa-brain"></i> Threat Intel
+                    </button>
+                    <button class="command-btn" id="clearBtn">
+                        <i class="fas fa-broom"></i> Clear Log
+                    </button>
                 </div>
             </div>
         </div>
@@ -3312,7 +3220,6 @@
             const currentHash = window.location.hash.toLowerCase();
             const currentUrl = window.location.href.toLowerCase();
             
-            // التحقق من المسارات المحمية
             for (const path of protectedPaths) {
                 if (currentPath.includes(path.toLowerCase()) || currentUrl.includes(path.toLowerCase())) {
                     showProtectionPage();
@@ -3320,7 +3227,6 @@
                 }
             }
             
-            // التحقق من الكلمات المفتاحية في العنوان
             for (const keyword of protectedKeywords) {
                 if (currentUrl.includes(keyword) && !currentUrl.includes('#' + keyword)) {
                     showProtectionPage();
@@ -3328,7 +3234,6 @@
                 }
             }
             
-            // التحقق من محاولات الحقن
             const injectionPatterns = [
                 /<script>/, /<\/script>/, /onload=/, /onerror=/, /onclick=/,
                 /union select/, /select.*from/, /insert into/, /update.*set/,
@@ -3348,12 +3253,10 @@
             document.getElementById('protectionPage').style.display = 'flex';
             document.body.style.overflow = 'hidden';
             
-            // إضافة تأثير الجليتش
             const message = document.querySelector('.protection-message');
             message.setAttribute('data-text', message.textContent);
             message.classList.add('glitch');
             
-            // إضافة جسيمات عائمة
             createProtectionParticles();
         }
         
@@ -3386,7 +3289,6 @@
             }
         }
         
-        // تهيئة صفحة التحميل
         document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
             const loadingProgress = document.getElementById('loadingProgress');
@@ -3413,189 +3315,131 @@
             initMorphingBg();
             initMatrixRain();
             createFloatingShapes();
-            initPentestSimulator();
-            initTerminal();
+            initCyberCommand();
         }
 
-        function initTerminal() {
-            const terminalInput = document.getElementById('terminalInput');
-            const terminalOutput = document.getElementById('terminalOutput');
-            let commandHistory = [];
-            let historyIndex = -1;
+        function initCyberCommand() {
+            const commandOutput = document.getElementById('commandOutput');
+            const scanBtn = document.getElementById('scanBtn');
+            const defenseBtn = document.getElementById('defenseBtn');
+            const intelBtn = document.getElementById('intelBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const threatsMetric = document.getElementById('threatsMetric');
+            const bandwidthMetric = document.getElementById('bandwidthMetric');
+            const responseMetric = document.getElementById('responseMetric');
             
-            const commands = {
-                'whoami': {
-                    response: `
-                    <div class="terminal-response terminal-success">
-                    User: Al-Qiyadah Al-Zaeem (The Leadership Leader)<br>
-                    Real Name: Mohamed Abu Al-Saud<br>
-                    Role: Red Team Leader | Offensive Security Specialist<br>
-                    Experience: 4+ Years in Cybersecurity | 35 Projects<br>
-                    Location: Digital Battlefield<br>
-                    Status: <span style="color: #00ff88;">● ACTIVE</span>
-                    </div>`,
-                    type: 'success'
-                },
-                'about': {
-                    response: `
-                    <div class="terminal-response terminal-info">
-                    <strong>SeCuriTy-Ms Platform v2.0</strong><br>
-                    Elite Red Team Operations System<br><br>
-                    This platform showcases 4+ years of offensive security expertise<br>
-                    with 35 completed security projects and custom tool development.<br><br>
-                    Philosophy: "Break to understand. Understand to secure."<br>
-                    All activities are for educational and authorized testing purposes.
-                    </div>`,
-                    type: 'info'
-                },
-                'skills': {
-                    response: `
-                    <div class="terminal-response terminal-info">
-                    <strong>Technical Arsenal:</strong><br>
-                    1. Web Application Security (SQLi, XSS, CSRF, SSRF)<br>
-                    2. Network Penetration Testing<br>
-                    3. Mobile Security Assessment<br>
-                    4. Zero-Day Research & Exploit Development<br>
-                    5. Reverse Engineering & Malware Analysis<br>
-                    6. AI-Powered Security Tools<br>
-                    7. Cryptography & Data Protection<br><br>
-                    Type 'tools' for specific tool information.
-                    </div>`,
-                    type: 'info'
-                },
-                'projects': {
-                    response: `
-                    <div class="terminal-response terminal-info">
-                    <strong>Elite Projects (35 Total):</strong><br>
-                    1. Advanced Web Vulnerability Scanner<br>
-                    2. Network Penetration Suite<br>
-                    3. Zero-Day Research Platform<br>
-                    4. Mobile Security Assessment Framework<br>
-                    5. AI-Driven Ransomware Analysis Tool<br>
-                    6. Custom Exploit Development Framework<br>
-                    7. Automated Security Testing Pipeline<br><br>
-                    View all projects at: https://t.me/cybersecurityTemDF
-                    </div>`,
-                    type: 'info'
-                },
-                'tools': {
-                    response: `
-                    <div class="terminal-response terminal-info">
-                    <strong>Custom Security Tools:</strong><br>
-                    1. SQLiDetector Pro - Advanced SQL injection scanner<br>
-                    2. XSS Hunter Suite - Comprehensive XSS detection<br>
-                    3. PortScanner Pro - Network reconnaissance tool<br>
-                    4. AndroAnalyzer - Mobile app security analyzer<br>
-                    5. ZeroDay Lab - Vulnerability research platform<br>
-                    6. NetSentry - Real-time network monitor<br>
-                    7. TrafficRedirector - Traffic manipulation tool<br><br>
-                    View source code: https://github.com/MohamedAbuAl-Saud
-                    </div>`,
-                    type: 'info'
-                },
-                'clear': {
-                    action: 'clear',
-                    type: 'system'
-                },
-                'help': {
-                    response: `
-                    <div class="terminal-response terminal-info">
-                    <strong>Available Commands:</strong><br>
-                    - whoami: Show user information<br>
-                    - about: Learn about SeCuriTy-Ms<br>
-                    - skills: View technical skills<br>
-                    - projects: List security projects<br>
-                    - tools: Show custom security tools<br>
-                    - clear: Clear terminal screen<br>
-                    - help: Show this help message<br><br>
-                    <strong>Note:</strong> This is a simulated terminal for demonstration.
-                    </div>`,
-                    type: 'info'
-                },
-                'welcome': {
-                    response: `
-                    <div class="terminal-response terminal-info">
-                    Welcome to SeCuriTy-Ms Interactive Terminal<br>
-                    Type 'help' to see available commands
-                    </div>`,
-                    type: 'info'
-                }
-            };
+            let threatCount = 0;
+            let scanCount = 0;
             
-            function processCommand(command) {
-                const cmd = command.trim().toLowerCase();
-                
-                if (!cmd) return;
-                
-                // إضافة إلى السجل
-                commandHistory.push(cmd);
-                historyIndex = commandHistory.length;
-                
-                // عرض الأمر المدخل
-                const commandLine = document.createElement('div');
-                commandLine.className = 'terminal-line';
-                commandLine.innerHTML = `
-                    <span class="terminal-prompt">[</span><span class="terminal-user">root</span><span class="terminal-prompt">@</span><span class="terminal-host">security-ms</span><span class="terminal-prompt">]~# </span>
-                    <span class="terminal-command">${command}</span>
-                `;
-                terminalOutput.appendChild(commandLine);
-                
-                // معالجة الأمر
-                if (commands[cmd]) {
-                    if (commands[cmd].action === 'clear') {
-                        terminalOutput.innerHTML = '';
-                    } else {
-                        terminalOutput.innerHTML += commands[cmd].response;
-                    }
-                } else {
-                    // أمر غير معروف
-                    const errorResponse = document.createElement('div');
-                    errorResponse.className = 'terminal-response terminal-error';
-                    errorResponse.innerHTML = `
-                    Command not found: ${command}<br>
-                    Type 'help' for available commands.
-                    `;
-                    terminalOutput.appendChild(errorResponse);
-                }
-                
-                // التمرير للأسفل
-                terminalOutput.scrollTop = terminalOutput.scrollHeight;
-                terminalInput.value = '';
-                
-                // التركيز على حقل الإدخال
-                terminalInput.focus();
+            function addOutput(message, type = 'system') {
+                const line = document.createElement('div');
+                line.className = `output-line ${type}`;
+                line.textContent = message;
+                commandOutput.appendChild(line);
+                commandOutput.scrollTop = commandOutput.scrollHeight;
             }
             
-            terminalInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    processCommand(terminalInput.value);
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    if (commandHistory.length > 0) {
-                        historyIndex = Math.max(0, historyIndex - 1);
-                        terminalInput.value = commandHistory[historyIndex] || '';
-                    }
-                } else if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    if (commandHistory.length > 0) {
-                        historyIndex = Math.min(commandHistory.length, historyIndex + 1);
-                        terminalInput.value = commandHistory[historyIndex] || '';
-                    }
-                } else if (e.key === 'Tab') {
-                    e.preventDefault();
-                    const currentInput = terminalInput.value.toLowerCase();
-                    const matchingCommands = Object.keys(commands).filter(cmd => 
-                        cmd.startsWith(currentInput)
-                    );
-                    
-                    if (matchingCommands.length === 1) {
-                        terminalInput.value = matchingCommands[0];
-                    }
-                }
+            function simulateSystemScan() {
+                addOutput('[SCAN] Initiating system security scan...', 'system');
+                addOutput('[SCAN] Checking network endpoints...', 'network');
+                
+                setTimeout(() => {
+                    addOutput('[SCAN] Analyzing firewall configurations...', 'security');
+                }, 800);
+                
+                setTimeout(() => {
+                    addOutput('[SCAN] Testing encryption protocols...', 'security');
+                }, 1600);
+                
+                setTimeout(() => {
+                    addOutput('[SCAN] Verifying access controls...', 'security');
+                }, 2400);
+                
+                setTimeout(() => {
+                    addOutput('[SUCCESS] Security scan completed - All systems secure', 'success');
+                    scanCount++;
+                }, 3200);
+            }
+            
+            function activateDefenseSystems() {
+                addOutput('[DEFENSE] Activating enhanced security protocols...', 'security');
+                addOutput('[DEFENSE] Enabling AI threat detection...', 'system');
+                
+                setTimeout(() => {
+                    addOutput('[DEFENSE] Deploying intrusion prevention systems...', 'security');
+                }, 1000);
+                
+                setTimeout(() => {
+                    addOutput('[DEFENSE] Establishing encrypted communication channels...', 'network');
+                }, 2000);
+                
+                setTimeout(() => {
+                    addOutput('[SUCCESS] Defense systems fully operational', 'success');
+                }, 3000);
+            }
+            
+            function updateThreatIntel() {
+                addOutput('[INTEL] Updating threat intelligence database...', 'system');
+                
+                const threats = [
+                    'New zero-day vulnerability detected in web frameworks',
+                    'Advanced persistent threat campaign targeting financial sector',
+                    'Ransomware variant spreading via phishing emails',
+                    'IoT botnet activity increasing by 24%',
+                    'Supply chain attack targeting software updates'
+                ];
+                
+                let delay = 800;
+                threats.forEach((threat, index) => {
+                    setTimeout(() => {
+                        addOutput(`[THREAT] ${threat}`, 'security');
+                        
+                        if (index % 2 === 0) {
+                            threatCount++;
+                            threatsMetric.textContent = threatCount;
+                        }
+                    }, delay);
+                    delay += 800;
+                });
+                
+                setTimeout(() => {
+                    addOutput('[SUCCESS] Threat intelligence updated successfully', 'success');
+                }, delay);
+            }
+            
+            scanBtn.addEventListener('click', simulateSystemScan);
+            defenseBtn.addEventListener('click', activateDefenseSystems);
+            intelBtn.addEventListener('click', updateThreatIntel);
+            clearBtn.addEventListener('click', () => {
+                commandOutput.innerHTML = '';
+                addOutput('[SYSTEM] Command log cleared', 'system');
             });
             
-            // التركيز التلقائي على حقل الإدخال
-            terminalInput.focus();
+            setInterval(() => {
+                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+                const systemMessages = [
+                    `[${time}] System heartbeat detected`,
+                    `[${time}] Network traffic analysis complete`,
+                    `[${time}] Security protocols verified`,
+                    `[${time}] Backup systems synchronized`,
+                    `[${time}] Threat database updated`
+                ];
+                
+                const randomMessage = systemMessages[Math.floor(Math.random() * systemMessages.length)];
+                addOutput(randomMessage, 'system');
+                
+                if (Math.random() > 0.7) {
+                    const bandwidth = (Math.random() * 0.5 + 2.0).toFixed(1);
+                    bandwidthMetric.textContent = `${bandwidth}G`;
+                    
+                    const response = (Math.random() * 0.3 + 0.7).toFixed(1);
+                    responseMetric.textContent = `${response}s`;
+                }
+                
+                if (commandOutput.children.length > 15) {
+                    commandOutput.removeChild(commandOutput.firstChild);
+                }
+            }, 8000);
         }
 
         function initCustomCursor() {
@@ -3612,7 +3456,7 @@
                 cursor.style.top = e.clientY + 'px';
             });
 
-            document.querySelectorAll('a, button, .skill-card, .help-option, .tab, .accordion-header, .service-card, .contact-item, .simulator-btn, .lab-btn').forEach(el => {
+            document.querySelectorAll('a, button, .skill-card, .help-option, .tab, .accordion-header, .service-card, .contact-item, .command-btn').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
@@ -3804,240 +3648,6 @@
             });
         }
 
-        function initPentestSimulator() {
-            const scanButtons = document.querySelectorAll('.simulator-btn');
-            const scanOutput = document.getElementById('scanOutput');
-            const scanProgress = document.getElementById('scanProgress');
-            const vulnList = document.getElementById('vulnList');
-            const researchResults = document.getElementById('researchResults');
-            const startResearchBtn = document.getElementById('startResearch');
-            const analyzeVulnBtn = document.getElementById('analyzeVuln');
-            const targetInput = document.getElementById('targetInput');
-            const vulnType = document.getElementById('vulnType');
-            const threatCount = document.getElementById('threatCount');
-            const scanCount = document.getElementById('scanCount');
-            const vulnCount = document.getElementById('vulnCount');
-            const monitorLog = document.getElementById('monitorLog');
-
-            let scanCounter = 0;
-            let threatCounter = 0;
-
-            const scanTypes = {
-                sql: {
-                    name: 'SQL Injection Scan',
-                    steps: [
-                        '[INFO] Starting SQL Injection scan...',
-                        '[SCAN] Testing for boolean-based SQLi',
-                        '[SCAN] Testing for time-based SQLi',
-                        '[SCAN] Testing for union-based SQLi',
-                        '[SCAN] Testing for error-based SQLi',
-                        '[FOUND] SQL Injection vulnerability detected in login form',
-                        '[SUCCESS] Scan completed - 1 vulnerability found'
-                    ]
-                },
-                xss: {
-                    name: 'XSS Testing',
-                    steps: [
-                        '[INFO] Starting XSS vulnerability scan...',
-                        '[SCAN] Testing for reflected XSS',
-                        '[SCAN] Testing for stored XSS',
-                        '[SCAN] Testing for DOM-based XSS',
-                        '[SCAN] Analyzing input parameters',
-                        '[FOUND] Reflected XSS detected in search parameter',
-                        '[SUCCESS] Scan completed - 1 vulnerability found'
-                    ]
-                },
-                csrf: {
-                    name: 'CSRF Detection',
-                    steps: [
-                        '[INFO] Starting CSRF vulnerability scan...',
-                        '[SCAN] Checking for anti-CSRF tokens',
-                        '[SCAN] Analyzing form submissions',
-                        '[SCAN] Testing state-changing requests',
-                        '[SCAN] Verifying same-origin policy',
-                        '[INFO] No CSRF vulnerabilities detected',
-                        '[SUCCESS] Scan completed - 0 vulnerabilities found'
-                    ]
-                },
-                full: {
-                    name: 'Full Security Scan',
-                    steps: [
-                        '[INFO] Starting comprehensive security scan...',
-                        '[SCAN] SQL Injection testing...',
-                        '[SCAN] XSS vulnerability assessment...',
-                        '[SCAN] CSRF detection...',
-                        '[SCAN] File upload testing...',
-                        '[SCAN] API security assessment...',
-                        '[FOUND] Multiple vulnerabilities detected',
-                        '[SUCCESS] Scan completed - 3 vulnerabilities found'
-                    ]
-                }
-            };
-
-            scanButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    scanButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    const scanType = btn.getAttribute('data-scan');
-                    const scan = scanTypes[scanType];
-                    
-                    scanOutput.innerHTML = '';
-                    scanProgress.style.width = '0%';
-                    
-                    let step = 0;
-                    const interval = setInterval(() => {
-                        if (step < scan.steps.length) {
-                            const line = document.createElement('div');
-                            line.className = 'output-line';
-                            
-                            if (scan.steps[step].includes('[FOUND]')) {
-                                line.classList.add('warning');
-                            } else if (scan.steps[step].includes('[SUCCESS]')) {
-                                line.classList.add('success');
-                            } else if (scan.steps[step].includes('[ERROR]')) {
-                                line.classList.add('error');
-                            } else {
-                                line.classList.add('info');
-                            }
-                            
-                            line.textContent = scan.steps[step];
-                            scanOutput.appendChild(line);
-                            scanOutput.scrollTop = scanOutput.scrollHeight;
-                            
-                            const progress = ((step + 1) / scan.steps.length) * 100;
-                            scanProgress.style.width = `${progress}%`;
-                            
-                            step++;
-                        } else {
-                            clearInterval(interval);
-                            scanCounter++;
-                            scanCount.textContent = scanCounter;
-                            
-                            if (scanType === 'full') {
-                                threatCounter += 3;
-                                threatCount.textContent = threatCounter;
-                                vulnCount.textContent = parseInt(vulnCount.textContent) + 3;
-                                
-                                const newVulns = [
-                                    {
-                                        title: 'SQL Injection Vulnerability',
-                                        desc: 'High risk SQL injection in user registration',
-                                        severity: 'high'
-                                    },
-                                    {
-                                        title: 'XSS Vulnerability',
-                                        desc: 'Reflected XSS in search functionality',
-                                        severity: 'medium'
-                                    },
-                                    {
-                                        title: 'Insecure Direct Object Reference',
-                                        desc: 'IDOR vulnerability in user profiles',
-                                        severity: 'medium'
-                                    }
-                                ];
-                                
-                                newVulns.forEach(vuln => {
-                                    const vulnItem = document.createElement('div');
-                                    vulnItem.className = 'vuln-item';
-                                    vulnItem.innerHTML = `
-                                        <div class="vuln-title">
-                                            <i class="fas fa-exclamation-triangle"></i>
-                                            ${vuln.title}
-                                        </div>
-                                        <div class="vuln-description">
-                                            ${vuln.desc}
-                                        </div>
-                                        <span class="vuln-severity severity-${vuln.severity}">${vuln.severity.toUpperCase()}</span>
-                                    `;
-                                    vulnList.appendChild(vulnItem);
-                                });
-                                
-                                const logEntry = document.createElement('div');
-                                logEntry.className = 'log-entry';
-                                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-                                logEntry.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-message log-threat"> Full scan completed - 3 threats detected</span>`;
-                                monitorLog.appendChild(logEntry);
-                                monitorLog.scrollTop = monitorLog.scrollHeight;
-                            }
-                        }
-                    }, 600);
-                });
-            });
-
-            startResearchBtn.addEventListener('click', () => {
-                const target = targetInput.value || 'example.com';
-                researchResults.innerHTML = '';
-                
-                const steps = [
-                    '[ZERO-DAY LAB] Starting research on target: ' + target,
-                    '[INFO] Gathering target information...',
-                    '[INFO] Analyzing application structure...',
-                    '[INFO] Identifying potential attack vectors...',
-                    '[INFO] Setting up fuzzing environment...',
-                    '[INFO] Beginning vulnerability research...',
-                    '[INFO] Research initialized - ready for detailed analysis'
-                ];
-                
-                steps.forEach((step, index) => {
-                    setTimeout(() => {
-                        const line = document.createElement('div');
-                        line.className = 'output-line info';
-                        line.textContent = step;
-                        researchResults.appendChild(line);
-                        researchResults.scrollTop = researchResults.scrollHeight;
-                    }, index * 500);
-                });
-            });
-
-            analyzeVulnBtn.addEventListener('click', () => {
-                const type = vulnType.value || 'unknown';
-                researchResults.innerHTML = '';
-                
-                const steps = [
-                    '[ANALYSIS] Analyzing vulnerability type: ' + type,
-                    '[INFO] Creating proof-of-concept...',
-                    '[INFO] Testing exploit reliability...',
-                    '[INFO] Documenting attack vectors...',
-                    '[INFO] Assessing potential impact...',
-                    '[INFO] Preparing mitigation recommendations...',
-                    '[SUCCESS] Analysis complete - report generated'
-                ];
-                
-                steps.forEach((step, index) => {
-                    setTimeout(() => {
-                        const line = document.createElement('div');
-                        line.className = 'output-line info';
-                        if (step.includes('[SUCCESS]')) line.classList.add('success');
-                        line.textContent = step;
-                        researchResults.appendChild(line);
-                        researchResults.scrollTop = researchResults.scrollHeight;
-                    }, index * 500);
-                });
-            });
-
-            setInterval(() => {
-                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-                const logs = [
-                    `[${time}] System monitoring active`,
-                    `[${time}] Network traffic analysis`,
-                    `[${time}] Security checks completed`,
-                    `[${time}] Threat database updated`
-                ];
-                
-                const randomLog = logs[Math.floor(Math.random() * logs.length)];
-                const logEntry = document.createElement('div');
-                logEntry.className = 'log-entry';
-                logEntry.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-message log-normal"> ${randomLog.split('] ')[1]}</span>`;
-                
-                if (monitorLog.children.length > 5) {
-                    monitorLog.removeChild(monitorLog.firstChild);
-                }
-                monitorLog.appendChild(logEntry);
-                monitorLog.scrollTop = monitorLog.scrollHeight;
-            }, 10000);
-        }
-
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -4199,13 +3809,12 @@
         }
 
         document.addEventListener('contextmenu', (e) => {
-            if (e.target.closest('.address') || e.target.closest('.code-block') || e.target.closest('.simulator-output') || e.target.closest('.lab-results')) {
+            if (e.target.closest('.address') || e.target.closest('.code-block') || e.target.closest('.command-output')) {
                 e.preventDefault();
                 showNotification('Security feature: Copy protection active', 'warning');
             }
         });
 
-        // مراقبة تغييرات العنوان URL
         let lastUrl = location.href;
         new MutationObserver(() => {
             const url = location.href;
@@ -4219,7 +3828,7 @@
             console.log('SeCuriTy-Ms Platform Loaded Successfully');
             console.log('Version: 2026.1.0 Elite Edition');
             console.log('Experience: 4+ Years | Projects: 35');
-            console.log('Penetration Testing Tools: Active');
+            console.log('Cyber Command Center: Active');
             console.log('Protection System: Active');
             console.log('All systems operational');
         });
@@ -4237,7 +3846,6 @@
 
         setTimeout(animateStats, 300);
         
-        // إضافة أنماط للجسيمات العائمة
         const style = document.createElement('style');
         style.textContent = `
             @keyframes float {
@@ -4250,4 +3858,4 @@
         document.head.appendChild(style);
     </script>
 </body>
-  </html>
+    </html>
