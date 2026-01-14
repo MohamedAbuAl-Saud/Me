@@ -73,6 +73,96 @@
             border-bottom: 1px solid #0066ff;
         }
 
+        /* Floating Particles */
+        .floating-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #0066ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff0055;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #00ff88;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 59px, 0); }
+            10% { clip: rect(48px, 9999px, 29px, 0); }
+            15% { clip: rect(42px, 9999px, 73px, 0); }
+            20% { clip: rect(63px, 9999px, 27px, 0); }
+            25% { clip: rect(34px, 9999px, 55px, 0); }
+            30% { clip: rect(86px, 9999px, 73px, 0); }
+            35% { clip: rect(20px, 9999px, 20px, 0); }
+            40% { clip: rect(26px, 9999px, 60px, 0); }
+            45% { clip: rect(25px, 9999px, 66px, 0); }
+            50% { clip: rect(57px, 9999px, 98px, 0); }
+            55% { clip: rect(5px, 9999px, 46px, 0); }
+            60% { clip: rect(82px, 9999px, 31px, 0); }
+            65% { clip: rect(54px, 9999px, 27px, 0); }
+            70% { clip: rect(28px, 9999px, 99px, 0); }
+            75% { clip: rect(45px, 9999px, 69px, 0); }
+            80% { clip: rect(23px, 9999px, 85px, 0); }
+            85% { clip: rect(54px, 9999px, 84px, 0); }
+            90% { clip: rect(45px, 9999px, 47px, 0); }
+            95% { clip: rect(37px, 9999px, 20px, 0); }
+            100% { clip: rect(4px, 9999px, 91px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(40px, 9999px, 86px, 0); }
+            95% { clip: rect(45px, 9999px, 72px, 0); }
+            100% { clip: rect(23px, 9999px, 49px, 0); }
+        }
+
         /* Terminal Simulator Styles */
         .interactive-terminal {
             background: rgba(0, 0, 0, 0.95);
@@ -86,6 +176,7 @@
             border: 2px solid #0066ff;
             box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
             position: relative;
+            margin-top: 20px;
         }
 
         .terminal-header {
@@ -191,94 +282,178 @@
             opacity: 0.7;
         }
 
-        /* Floating Particles */
-        .floating-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #0066ff;
+        /* Live Attack Map */
+        .attack-map {
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 8px;
+            padding: 25px;
+            border: 2px solid #0066ff;
+            box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+
+        .map-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
+        }
+
+        .map-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .map-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.3;
+            background: var(--accent);
+            animation: pulse 2s infinite;
         }
 
-        /* Glitch Effect */
-        .glitch {
+        .status-text {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .world-map {
             position: relative;
-            display: inline-block;
-        }
-
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
+            height: 250px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            margin-bottom: 20px;
         }
 
-        .glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 #ff0055;
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
+        .map-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            transform: translate(-50%, -50%);
+            animation: mapPulse 2s infinite;
         }
 
-        .glitch::after {
-            left: -2px;
-            text-shadow: -2px 0 #00ff88;
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        .map-point.red {
+            background: var(--secondary);
         }
 
-        @keyframes glitch-anim {
-            0% { clip: rect(42px, 9999px, 44px, 0); }
-            5% { clip: rect(12px, 9999px, 59px, 0); }
-            10% { clip: rect(48px, 9999px, 29px, 0); }
-            15% { clip: rect(42px, 9999px, 73px, 0); }
-            20% { clip: rect(63px, 9999px, 27px, 0); }
-            25% { clip: rect(34px, 9999px, 55px, 0); }
-            30% { clip: rect(86px, 9999px, 73px, 0); }
-            35% { clip: rect(20px, 9999px, 20px, 0); }
-            40% { clip: rect(26px, 9999px, 60px, 0); }
-            45% { clip: rect(25px, 9999px, 66px, 0); }
-            50% { clip: rect(57px, 9999px, 98px, 0); }
-            55% { clip: rect(5px, 9999px, 46px, 0); }
-            60% { clip: rect(82px, 9999px, 31px, 0); }
-            65% { clip: rect(54px, 9999px, 27px, 0); }
-            70% { clip: rect(28px, 9999px, 99px, 0); }
-            75% { clip: rect(45px, 9999px, 69px, 0); }
-            80% { clip: rect(23px, 9999px, 85px, 0); }
-            85% { clip: rect(54px, 9999px, 84px, 0); }
-            90% { clip: rect(45px, 9999px, 47px, 0); }
-            95% { clip: rect(37px, 9999px, 20px, 0); }
-            100% { clip: rect(4px, 9999px, 91px, 0); }
+        .map-point.green {
+            background: var(--accent);
         }
 
-        @keyframes glitch-anim2 {
-            0% { clip: rect(65px, 9999px, 100px, 0); }
-            5% { clip: rect(52px, 9999px, 74px, 0); }
-            10% { clip: rect(79px, 9999px, 85px, 0); }
-            15% { clip: rect(75px, 9999px, 5px, 0); }
-            20% { clip: rect(67px, 9999px, 61px, 0); }
-            25% { clip: rect(14px, 9999px, 79px, 0); }
-            30% { clip: rect(1px, 9999px, 66px, 0); }
-            35% { clip: rect(86px, 9999px, 30px, 0); }
-            40% { clip: rect(23px, 9999px, 98px, 0); }
-            45% { clip: rect(85px, 9999px, 72px, 0); }
-            50% { clip: rect(71px, 9999px, 75px, 0); }
-            55% { clip: rect(2px, 9999px, 48px, 0); }
-            60% { clip: rect(30px, 9999px, 16px, 0); }
-            65% { clip: rect(59px, 9999px, 50px, 0); }
-            70% { clip: rect(41px, 9999px, 62px, 0); }
-            75% { clip: rect(2px, 9999px, 82px, 0); }
-            80% { clip: rect(47px, 9999px, 73px, 0); }
-            85% { clip: rect(3px, 9999px, 27px, 0); }
-            90% { clip: rect(40px, 9999px, 86px, 0); }
-            95% { clip: rect(45px, 9999px, 72px, 0); }
-            100% { clip: rect(23px, 9999px, 49px, 0); }
+        .map-point.orange {
+            background: #ffaa00;
+        }
+
+        .attack-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 102, 255, 0.05);
+            border-radius: 6px;
+            border: 1px solid rgba(0, 102, 255, 0.1);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .attack-log {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 6px;
+            padding: 15px;
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.4;
+            height: 150px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .log-time {
+            color: #666;
+            min-width: 70px;
+        }
+
+        .log-type {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .log-type.alert {
+            background: rgba(255, 0, 85, 0.1);
+            color: var(--secondary);
+        }
+
+        .log-type.warning {
+            background: rgba(255, 170, 0, 0.1);
+            color: #ffaa00;
+        }
+
+        .log-type.info {
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .log-type.success {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--accent);
+        }
+
+        .log-message {
+            flex: 1;
+        }
+
+        @keyframes mapPulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 102, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
         }
 
         /* Existing styles remain unchanged */
@@ -1386,6 +1561,10 @@
                 bottom: 15px;
                 right: 15px;
             }
+            
+            .attack-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 576px) {
@@ -1441,6 +1620,10 @@
             
             .loading-text p {
                 font-size: 9px;
+            }
+            
+            .attack-stats {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -2167,198 +2350,406 @@
             opacity: 0.2;
         }
 
-        /* Cyber Command Center Styles */
-        .cyber-command {
-            background: rgba(0, 0, 0, 0.95);
-            border-radius: 8px;
+        /* Security Research Section */
+        .research-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .research-timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            border-radius: 1.5px;
+        }
+        
+        .research-item {
+            padding: 15px 30px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 30px;
+        }
+        
+        .research-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+        
+        .research-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .research-content {
             padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .research-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .research-year {
+            display: inline-block;
+            padding: 5px 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .research-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 3px solid #000;
+            border-radius: 50%;
+            z-index: 1;
+            top: 20px;
+        }
+        
+        .research-item:nth-child(odd) .research-dot {
+            right: -10px;
+        }
+        
+        .research-item:nth-child(even) .research-dot {
+            left: -10px;
+        }
+        
+        .research-title {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .research-description {
+            color: #ccc;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        
+        /* Security Quiz Section */
+        .quiz-container {
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 10px;
+            padding: 30px;
             border: 2px solid var(--primary);
-            box-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 102, 255, 0.3);
             backdrop-filter: blur(10px);
         }
-
-        .command-header {
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .quiz-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        .quiz-question {
+            font-size: 18px;
+            color: var(--light);
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .quiz-option {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .quiz-option:hover {
+            background: rgba(0, 102, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .quiz-option.selected {
+            background: rgba(0, 102, 255, 0.2);
+            border-color: var(--primary);
+            color: var(--accent);
+        }
+        
+        .quiz-option.correct {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .quiz-option.incorrect {
+            background: rgba(255, 0, 85, 0.2);
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .quiz-feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .quiz-feedback.correct {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            display: block;
+        }
+        
+        .quiz-feedback.incorrect {
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            display: block;
+        }
+        
+        .quiz-controls {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0, 102, 255, 0.3);
+            margin-top: 25px;
         }
-
-        .command-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
+        
+        .quiz-next-btn {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        .quiz-next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.4);
+        }
+        
+        .quiz-next-btn.show {
+            display: block;
+        }
+        
+        .quiz-results {
+            text-align: center;
+            padding: 30px;
+            display: none;
+        }
+        
+        .quiz-score {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 20px 0;
+        }
+        
+        .quiz-congrats {
             color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
-
-        .command-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        
+        .quiz-restart-btn {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
         }
-
-        .status-dot {
+        
+        .quiz-restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.4);
+        }
+        
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            display: none;
+        }
+        
+        .confetti {
+            position: absolute;
             width: 10px;
             height: 10px;
-            border-radius: 50%;
             background: var(--accent);
-            animation: pulse 2s infinite;
+            opacity: 0;
         }
-
-        .status-text {
-            color: var(--accent);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .command-grid {
+        
+        /* Support Security Research Section */
+        .donation-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin-bottom: 20px;
         }
-
-        .command-module {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 6px;
-            padding: 15px;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            transition: all 0.3s;
+        
+        .donation-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
         }
-
-        .command-module:hover {
+        
+        .donation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.2);
             border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
         }
-
-        .module-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(0, 102, 255, 0.1);
-        }
-
-        .module-icon {
-            width: 30px;
-            height: 30px;
+        
+        .donation-icon {
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 20px;
             color: white;
+            margin: 0 auto 15px;
         }
-
-        .module-title {
-            font-size: 14px;
-            color: var(--light);
-            font-weight: 600;
-        }
-
-        .module-content {
+        
+        .donation-address {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
             color: #ccc;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .donation-note {
+            color: #aaa;
             font-size: 11px;
+            text-align: center;
+            margin-top: 10px;
             line-height: 1.5;
         }
-
-        .command-output {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 6px;
-            padding: 15px;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            line-height: 1.4;
-            height: 150px;
-            overflow-y: auto;
-        }
-
-        .output-line {
-            margin-bottom: 5px;
-            color: #ccc;
-        }
-
-        .output-line.system {
-            color: var(--accent);
-        }
-
-        .output-line.security {
-            color: #ff0055;
-        }
-
-        .output-line.network {
-            color: #0066ff;
-        }
-
-        .output-line.success {
-            color: #00ff88;
-        }
-
-        .command-controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .command-btn {
-            padding: 8px 15px;
-            background: rgba(0, 102, 255, 0.1);
-            border: 1px solid rgba(0, 102, 255, 0.3);
-            border-radius: 4px;
-            color: var(--primary);
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .command-btn:hover {
-            background: rgba(0, 102, 255, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .command-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .system-metrics {
+        
+        /* Request Assistance Section */
+        .assistance-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
-
-        .metric {
+        
+        .assistance-option {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 25px 20px;
             text-align: center;
-            padding: 10px;
-            background: rgba(0, 102, 255, 0.05);
-            border-radius: 4px;
-            border: 1px solid rgba(0, 102, 255, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-
-        .metric-value {
-            font-size: 16px;
-            font-weight: 900;
-            color: var(--accent);
-            margin-bottom: 5px;
+        
+        .assistance-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.2);
         }
-
-        .metric-label {
-            font-size: 9px;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        
+        .assistance-option.selected {
+            border-color: var(--primary);
+            background: rgba(0, 102, 255, 0.1);
+        }
+        
+        .assistance-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .assistance-form {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            display: none;
+        }
+        
+        .assistance-form.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .assistance-type {
+            padding: 10px 20px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
         }
     </style>
 </head>
@@ -2424,13 +2815,14 @@
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
-                <a href="#cyber">Cyber Command</a>
                 <a href="#projects">Projects</a>
                 <a href="#tools">Tools</a>
                 <a href="#services">Services</a>
+                <a href="#research">Security Research</a>
+                <a href="#quiz">Security Quiz</a>
+                <a href="#support">Support Research</a>
+                <a href="#assistance">Request Assistance</a>
                 <a href="#contact">Contact</a>
-                <a href="#support">Support</a>
-                <a href="#help">Help</a>
             </nav>
         </div>
     </header>
@@ -2456,11 +2848,11 @@
                 <a href="https://t.me/cybersecurityTemDF" target="_blank" class="btn btn-primary hologram-effect">
                     <i class="fab fa-telegram"></i> View Projects on Telegram
                 </a>
-                <a href="#cyber" class="btn btn-secondary">
-                    <i class="fas fa-crosshairs"></i> Access Cyber Command
+                <a href="#research" class="btn btn-secondary">
+                    <i class="fas fa-crosshairs"></i> Security Research
                 </a>
-                <a href="https://mohamedabual-saud.github.io/OurcoursesMs" target="_blank" class="btn btn-learn">
-                    <i class="fas fa-graduation-cap"></i> Start Learning From Scratch
+                <a href="#quiz" class="btn btn-learn">
+                    <i class="fas fa-brain"></i> Test Your Security Knowledge
                 </a>
             </div>
         </div>
@@ -2782,130 +3174,104 @@
         </div>
     </section>
 
-    <!-- Cyber Command Center Section -->
-    <section id="cyber" class="glass-effect">
+    <!-- Interactive Terminal Section -->
+    <section id="terminal" class="glass-effect">
         <div class="container">
-            <h2 class="section-title">Cyber Command Center</h2>
-            <div class="cyber-command">
-                <div class="command-header">
-                    <div class="command-title">
-                        <i class="fas fa-satellite-dish"></i>
-                        SeCuriTy-Ms Command Interface v3.0
+            <h2 class="section-title">Interactive Terminal Simulator</h2>
+            <p style="text-align: center; color: #ccc; margin-bottom: 20px; font-size: 11px;">
+                Experience a simulated security terminal with real-time interaction. Type 'help' to see available commands.
+            </p>
+            
+            <div class="interactive-terminal" id="interactiveTerminal">
+                <div class="terminal-header">
+                    <div class="terminal-title">
+                        <i class="fas fa-terminal"></i> SeCuriTy-Ms Terminal v1.0
                     </div>
-                    <div class="command-status">
+                    <div class="terminal-controls">
+                        <div class="terminal-btn close" id="terminalClose"></div>
+                        <div class="terminal-btn minimize" id="terminalMinimize"></div>
+                        <div class="terminal-btn maximize" id="terminalMaximize"></div>
+                    </div>
+                </div>
+                
+                <div class="terminal-output" id="terminalOutput">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">root@security-ms:~#</span>
+                        <span class="terminal-command">system-status</span>
+                    </div>
+                    <div class="terminal-response terminal-success">
+                        SeCuriTy-Ms Terminal v1.0 initialized...
+                    </div>
+                    <div class="terminal-response terminal-success">
+                        All systems operational. Security level: HIGH
+                    </div>
+                    <div class="terminal-response terminal-info">
+                        Type 'help' to see available commands
+                    </div>
+                </div>
+                
+                <div class="terminal-line">
+                    <span class="terminal-prompt">root@security-ms:~#</span>
+                    <input type="text" class="terminal-command" id="terminalInput" placeholder="Type command...">
+                </div>
+            </div>
+            
+            <!-- Live Attack Map -->
+            <div class="attack-map">
+                <div class="map-header">
+                    <div class="map-title">
+                        <i class="fas fa-globe-americas"></i> Global Security Threat Map
+                    </div>
+                    <div class="map-status">
                         <div class="status-dot"></div>
-                        <span class="status-text">SYSTEMS ONLINE</span>
+                        <span class="status-text">LIVE MONITORING</span>
                     </div>
                 </div>
                 
-                <div class="command-grid">
-                    <div class="command-module">
-                        <div class="module-header">
-                            <div class="module-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="module-title">System Security Status</div>
-                        </div>
-                        <div class="module-content">
-                            All security systems operational. Threat level: LOW<br>
-                            Last scan: 2 minutes ago<br>
-                            Protected endpoints: 127<br>
-                            Active firewalls: 8<br>
-                            Encryption protocols: AES-256, RSA-4096
-                        </div>
+                <div class="world-map" id="worldMap">
+                    <!-- Attack points will be dynamically added here -->
+                </div>
+                
+                <div class="attack-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="attacksBlocked">1,247</div>
+                        <div class="stat-label">Attacks Blocked</div>
                     </div>
-                    
-                    <div class="command-module">
-                        <div class="module-header">
-                            <div class="module-icon">
-                                <i class="fas fa-network-wired"></i>
-                            </div>
-                            <div class="module-title">Network Operations</div>
-                        </div>
-                        <div class="module-content">
-                            Network throughput: 2.4 Gbps<br>
-                            Connected devices: 42<br>
-                            Bandwidth usage: 67%<br>
-                            Latency: 12ms average<br>
-                            Packet loss: 0.02%
-                        </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="activeThreats">12</div>
+                        <div class="stat-label">Active Threats</div>
                     </div>
-                    
-                    <div class="command-module">
-                        <div class="module-header">
-                            <div class="module-icon">
-                                <i class="fas fa-database"></i>
-                            </div>
-                            <div class="module-title">Data Intelligence</div>
-                        </div>
-                        <div class="module-content">
-                            Active databases: 18<br>
-                            Total records: 2.4M<br>
-                            Data processed: 4.7TB<br>
-                            Encryption rate: 98.7%<br>
-                            Backup integrity: 100%
-                        </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="systemsProtected">156</div>
+                        <div class="stat-label">Systems Protected</div>
                     </div>
-                    
-                    <div class="command-module">
-                        <div class="module-header">
-                            <div class="module-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="module-title">AI Security Systems</div>
-                        </div>
-                        <div class="module-content">
-                            AI models active: 12<br>
-                            Threat detection accuracy: 99.3%<br>
-                            False positive rate: 0.7%<br>
-                            Learning iterations: 24,578<br>
-                            Response time: 0.8s
-                        </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="responseTime">0.8s</div>
+                        <div class="stat-label">Response Time</div>
                     </div>
                 </div>
                 
-                <div class="command-output" id="commandOutput">
-                    <div class="output-line system">[SYSTEM] Cyber Command Center initialized...</div>
-                    <div class="output-line success">[SUCCESS] All security systems online</div>
-                    <div class="output-line network">[NETWORK] Establishing secure connections...</div>
-                    <div class="output-line success">[SUCCESS] Encrypted channels established</div>
-                    <div class="output-line system">[SYSTEM] Threat intelligence feed active</div>
-                    <div class="output-line security">[SECURITY] Monitoring 127 endpoints</div>
-                    <div class="output-line system">[SYSTEM] Ready for command input</div>
-                </div>
-                
-                <div class="system-metrics">
-                    <div class="metric">
-                        <div class="metric-value" id="uptimeMetric">99.98%</div>
-                        <div class="metric-label">Uptime</div>
+                <div class="attack-log" id="attackLog">
+                    <div class="log-entry">
+                        <span class="log-time">12:45:23</span>
+                        <span class="log-type info">INFO</span>
+                        <span class="log-message">Security systems initialized</span>
                     </div>
-                    <div class="metric">
-                        <div class="metric-value" id="threatsMetric">0</div>
-                        <div class="metric-label">Active Threats</div>
+                    <div class="log-entry">
+                        <span class="log-time">12:46:01</span>
+                        <span class="log-type alert">ALERT</span>
+                        <span class="log-message">Potential SQL injection attempt detected from 192.168.1.45</span>
                     </div>
-                    <div class="metric">
-                        <div class="metric-value" id="bandwidthMetric">2.4G</div>
-                        <div class="metric-label">Bandwidth</div>
+                    <div class="log-entry">
+                        <span class="log-time">12:46:35</span>
+                        <span class="log-type success">SUCCESS</span>
+                        <span class="log-message">Attack blocked successfully</span>
                     </div>
-                    <div class="metric">
-                        <div class="metric-value" id="responseMetric">0.8s</div>
-                        <div class="metric-label">Response Time</div>
+                    <div class="log-entry">
+                        <span class="log-time">12:47:12</span>
+                        <span class="log-type warning">WARNING</span>
+                        <span class="log-message">Port scan detected from 10.0.0.23</span>
                     </div>
-                </div>
-                
-                <div class="command-controls">
-                    <button class="command-btn" id="scanBtn">
-                        <i class="fas fa-search"></i> System Scan
-                    </button>
-                    <button class="command-btn" id="defenseBtn">
-                        <i class="fas fa-shield-alt"></i> Defense Systems
-                    </button>
-                    <button class="command-btn" id="intelBtn">
-                        <i class="fas fa-brain"></i> Threat Intel
-                    </button>
-                    <button class="command-btn" id="clearBtn">
-                        <i class="fas fa-broom"></i> Clear Log
-                    </button>
                 </div>
             </div>
         </div>
@@ -3106,6 +3472,200 @@
         </div>
     </section>
 
+    <!-- Security Research Section -->
+    <section id="research" class="glass-effect">
+        <div class="container">
+            <h2 class="section-title">Security Research</h2>
+            <div class="research-timeline">
+                <div class="research-item">
+                    <div class="research-dot"></div>
+                    <div class="research-content">
+                        <div class="research-year">2023 - Present</div>
+                        <h3 class="research-title">AI in Cybersecurity</h3>
+                        <p class="research-description">Research on machine learning applications in offensive security operations and threat detection with practical implementation in security tools. Focus on adversarial machine learning and AI-powered attack simulations.</p>
+                    </div>
+                </div>
+                <div class="research-item">
+                    <div class="research-dot"></div>
+                    <div class="research-content">
+                        <div class="research-year">2021 - 2023</div>
+                        <h3 class="research-title">Zero-Day Vulnerabilities</h3>
+                        <p class="research-description">Analysis and discovery of unknown vulnerabilities in popular software and systems with responsible disclosure practices. Special focus on web applications and network protocols.</p>
+                    </div>
+                </div>
+                <div class="research-item">
+                    <div class="research-dot"></div>
+                    <div class="research-content">
+                        <div class="research-year">2020 - 2022</div>
+                        <h3 class="research-title">Blockchain Security</h3>
+                        <p class="research-description">Research on security aspects of blockchain technology and smart contract vulnerabilities with practical exploitation techniques. Analysis of decentralized application security.</p>
+                    </div>
+                </div>
+                <div class="research-item">
+                    <div class="research-dot"></div>
+                    <div class="research-content">
+                        <div class="research-year">2022 - Present</div>
+                        <h3 class="research-title">AWS Infrastructure Security</h3>
+                        <p class="research-description">Research on cloud infrastructure vulnerabilities focusing on AWS services and temporary DoS attack vectors for security testing. Analysis of cloud misconfigurations and privilege escalation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Quiz Section -->
+    <section id="quiz" class="glass-effect">
+        <div class="container">
+            <h2 class="section-title">Security Knowledge Quiz</h2>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <h3 style="color: var(--accent); margin-bottom: 10px;">Test Your Cybersecurity Knowledge</h3>
+                    <p style="color: #ccc; margin-bottom: 20px;">Answer 5 questions to test your security knowledge. Questions range from easy to expert level.</p>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="quizProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div id="quizContent">
+                    <div class="quiz-question" id="quizQuestion">Loading question...</div>
+                    <div class="quiz-options" id="quizOptions"></div>
+                    <div class="quiz-feedback" id="quizFeedback"></div>
+                    <div class="quiz-controls">
+                        <div id="questionCounter" style="color: #aaa; font-size: 12px;">Question 1 of 5</div>
+                        <button class="quiz-next-btn" id="quizNextBtn">Next Question</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-results" id="quizResults">
+                    <div class="quiz-congrats">Quiz Completed!</div>
+                    <div class="quiz-score" id="quizScore">0/5</div>
+                    <p style="color: #ccc; margin-bottom: 20px;" id="quizResultText">Your security knowledge level will appear here.</p>
+                    <button class="quiz-restart-btn" id="quizRestartBtn">Restart Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Security Research Section -->
+    <section id="support" class="glass-effect">
+        <div class="container">
+            <h2 class="section-title">Support Security Research</h2>
+            <p style="text-align: center; color: #ccc; margin-bottom: 30px; font-size: 13px;">
+                Support the development of advanced security tools and research. All donations help maintain and improve open-source security tools and fund security research projects.
+            </p>
+            <div class="donation-grid">
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fab fa-usd"></i>
+                    </div>
+                    <h3 class="support-title">USDT (TRX)</h3>
+                    <div class="donation-address">TBo73eQaWM8SPPaTfMacWiuukw4DXrNPtE</div>
+                    <button class="copy-btn" data-address="TBo73eQaWM8SPPaTfMacWiuukw4DXrNPtE">
+                        <i class="fas fa-copy"></i> Copy Address
+                    </button>
+                    <p class="donation-note">TRC20 Network</p>
+                </div>
+                
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fab fa-usd"></i>
+                    </div>
+                    <h3 class="support-title">USDT (BSC)</h3>
+                    <div class="donation-address">0x424a01572387398f3494fc4475fafcc45a688168</div>
+                    <button class="copy-btn" data-address="0x424a01572387398f3494fc4475fafcc45a688168">
+                        <i class="fas fa-copy"></i> Copy Address
+                    </button>
+                    <p class="donation-note">Binance Smart Chain</p>
+                </div>
+                
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fab fa-btc"></i>
+                    </div>
+                    <h3 class="support-title">Bitcoin</h3>
+                    <div class="donation-address">bc1qlh27d9m2cy70vm85mecfhgz27lxqz9v23ys5sdtfhr8vsaecfh4svuq9xy</div>
+                    <button class="copy-btn" data-address="bc1qlh27d9m2cy70vm85mecfhgz27lxqz9v23ys5sdtfhr8vsaecfh4svuq9xy">
+                        <i class="fas fa-copy"></i> Copy Address
+                    </button>
+                    <p class="donation-note">Bitcoin Network</p>
+                </div>
+                
+                <div class="donation-card">
+                    <div class="donation-icon">
+                        <i class="fab fa-usd"></i>
+                    </div>
+                    <h3 class="support-title">USDT (TON)</h3>
+                    <div class="donation-address">UQBTIuxfyn8PCSXlbM6DmY_iFc1ky5OHRfb48v1i0UbDVDdL</div>
+                    <button class="copy-btn" data-address="UQBTIuxfyn8PCSXlbM6DmY_iFc1ky5OHRfb48v1i0UbDVDdL">
+                        <i class="fas fa-copy"></i> Copy Address
+                    </button>
+                    <p class="donation-note">TON Network</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <p style="color: #aaa; font-size: 12px;">
+                    For other support methods or international transfers, contact via WhatsApp:<br>
+                    <a href="https://wa.me/251970384031" style="color: var(--primary); text-decoration: none; font-weight: 600;">+251 97 038 4031</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Request Assistance Section -->
+    <section id="assistance">
+        <div class="container">
+            <h2 class="section-title">Request Assistance</h2>
+            <div class="assistance-grid">
+                <div class="assistance-option" data-type="problem">
+                    <div class="assistance-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="help-title">Problem / Issue</h3>
+                    <p class="help-description">Security issues or technical problems needing immediate attention</p>
+                </div>
+                <div class="assistance-option" data-type="assistance">
+                    <div class="assistance-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="help-title">Assistance</h3>
+                    <p class="help-description">Help with security projects, tool development, or technical guidance</p>
+                </div>
+                <div class="assistance-option" data-type="learning">
+                    <div class="assistance-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="help-title">Learning</h3>
+                    <p class="help-description">Learn cybersecurity and offensive security from scratch</p>
+                </div>
+                <div class="assistance-option" data-type="development">
+                    <div class="assistance-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="help-title">Development</h3>
+                    <p class="help-description">Custom tool, application, or security solution development</p>
+                </div>
+            </div>
+            
+            <div class="assistance-form" id="assistanceForm">
+                <div class="assistance-type" id="assistanceType">Selected Type</div>
+                <form id="assistanceRequestForm">
+                    <div class="form-group">
+                        <label>Request Details</label>
+                        <textarea class="form-control form-textarea" id="assistanceDetails" placeholder="Describe your request in detail..." required style="min-height: 100px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Information</label>
+                        <input type="text" class="form-control" id="assistanceContact" placeholder="Telegram @username or Phone number" required>
+                        <div class="input-hint">Format: @username or +251XXXXXXXXX</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fab fa-whatsapp"></i> Send Request via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="glass-effect">
         <div class="container">
             <h2 class="section-title">Secure Contact</h2>
@@ -3209,6 +3769,9 @@
     </div>
 
     <div class="notification" id="notification"></div>
+    
+    <!-- Celebration Animation Container -->
+    <div class="celebration" id="celebration"></div>
 
     <script>
         // حماية المسارات
@@ -3315,131 +3878,587 @@
             initMorphingBg();
             initMatrixRain();
             createFloatingShapes();
-            initCyberCommand();
+            initTerminal();
+            initAttackMap();
+            initQuiz();
+            initAssistanceForm();
         }
 
-        function initCyberCommand() {
-            const commandOutput = document.getElementById('commandOutput');
-            const scanBtn = document.getElementById('scanBtn');
-            const defenseBtn = document.getElementById('defenseBtn');
-            const intelBtn = document.getElementById('intelBtn');
-            const clearBtn = document.getElementById('clearBtn');
-            const threatsMetric = document.getElementById('threatsMetric');
-            const bandwidthMetric = document.getElementById('bandwidthMetric');
-            const responseMetric = document.getElementById('responseMetric');
-            
-            let threatCount = 0;
-            let scanCount = 0;
-            
-            function addOutput(message, type = 'system') {
-                const line = document.createElement('div');
-                line.className = `output-line ${type}`;
-                line.textContent = message;
-                commandOutput.appendChild(line);
-                commandOutput.scrollTop = commandOutput.scrollHeight;
-            }
-            
-            function simulateSystemScan() {
-                addOutput('[SCAN] Initiating system security scan...', 'system');
-                addOutput('[SCAN] Checking network endpoints...', 'network');
-                
-                setTimeout(() => {
-                    addOutput('[SCAN] Analyzing firewall configurations...', 'security');
-                }, 800);
-                
-                setTimeout(() => {
-                    addOutput('[SCAN] Testing encryption protocols...', 'security');
-                }, 1600);
-                
-                setTimeout(() => {
-                    addOutput('[SCAN] Verifying access controls...', 'security');
-                }, 2400);
-                
-                setTimeout(() => {
-                    addOutput('[SUCCESS] Security scan completed - All systems secure', 'success');
-                    scanCount++;
-                }, 3200);
-            }
-            
-            function activateDefenseSystems() {
-                addOutput('[DEFENSE] Activating enhanced security protocols...', 'security');
-                addOutput('[DEFENSE] Enabling AI threat detection...', 'system');
-                
-                setTimeout(() => {
-                    addOutput('[DEFENSE] Deploying intrusion prevention systems...', 'security');
-                }, 1000);
-                
-                setTimeout(() => {
-                    addOutput('[DEFENSE] Establishing encrypted communication channels...', 'network');
-                }, 2000);
-                
-                setTimeout(() => {
-                    addOutput('[SUCCESS] Defense systems fully operational', 'success');
-                }, 3000);
-            }
-            
-            function updateThreatIntel() {
-                addOutput('[INTEL] Updating threat intelligence database...', 'system');
-                
-                const threats = [
-                    'New zero-day vulnerability detected in web frameworks',
-                    'Advanced persistent threat campaign targeting financial sector',
-                    'Ransomware variant spreading via phishing emails',
-                    'IoT botnet activity increasing by 24%',
-                    'Supply chain attack targeting software updates'
-                ];
-                
-                let delay = 800;
-                threats.forEach((threat, index) => {
-                    setTimeout(() => {
-                        addOutput(`[THREAT] ${threat}`, 'security');
-                        
-                        if (index % 2 === 0) {
-                            threatCount++;
-                            threatsMetric.textContent = threatCount;
-                        }
-                    }, delay);
-                    delay += 800;
-                });
-                
-                setTimeout(() => {
-                    addOutput('[SUCCESS] Threat intelligence updated successfully', 'success');
-                }, delay);
-            }
-            
-            scanBtn.addEventListener('click', simulateSystemScan);
-            defenseBtn.addEventListener('click', activateDefenseSystems);
-            intelBtn.addEventListener('click', updateThreatIntel);
-            clearBtn.addEventListener('click', () => {
-                commandOutput.innerHTML = '';
-                addOutput('[SYSTEM] Command log cleared', 'system');
-            });
-            
-            setInterval(() => {
-                const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
-                const systemMessages = [
-                    `[${time}] System heartbeat detected`,
-                    `[${time}] Network traffic analysis complete`,
-                    `[${time}] Security protocols verified`,
-                    `[${time}] Backup systems synchronized`,
-                    `[${time}] Threat database updated`
-                ];
-                
-                const randomMessage = systemMessages[Math.floor(Math.random() * systemMessages.length)];
-                addOutput(randomMessage, 'system');
-                
-                if (Math.random() > 0.7) {
-                    const bandwidth = (Math.random() * 0.5 + 2.0).toFixed(1);
-                    bandwidthMetric.textContent = `${bandwidth}G`;
+        function initTerminal() {
+            const terminalInput = document.getElementById('terminalInput');
+            const terminalOutput = document.getElementById('terminalOutput');
+            const terminalClose = document.getElementById('terminalClose');
+            const terminalMinimize = document.getElementById('terminalMinimize');
+            const terminalMaximize = document.getElementById('terminalMaximize');
+            const interactiveTerminal = document.getElementById('interactiveTerminal');
+
+            const commands = {
+                'help': {
+                    response: `<div class="terminal-response terminal-info">Available commands:</div>
+                              <div class="terminal-help">• help - Show this help message</div>
+                              <div class="terminal-help">• whoami - Show current user info</div>
+                              <div class="terminal-help">• system-status - Check system status</div>
+                              <div class="terminal-help">• projects - List security projects</div>
+                              <div class="terminal-help">• skills - Show technical skills</div>
+                              <div class="terminal-help">• clear - Clear terminal screen</div>`,
+                    type: 'info'
+                },
+                'whoami': {
+                    response: `<div class="terminal-response terminal-success">User: Al-Qiyadah Al-Zaeem (The Leadership Leader)</div>
+                              <div class="terminal-response terminal-success">Real Name: Mohamed Abu Al-Saud</div>
+                              <div class="terminal-response terminal-success">Role: Red Team Leader | Offensive Security Specialist</div>
+                              <div class="terminal-response terminal-success">Experience: 4+ Years in Cybersecurity | 35 Projects</div>`,
+                    type: 'success'
+                },
+                'system-status': {
+                    response: `<div class="terminal-response terminal-success">System Status: ONLINE</div>
+                              <div class="terminal-response terminal-success">Security Level: HIGH</div>
+                              <div class="terminal-response terminal-success">Active Projects: 35</div>
+                              <div class="terminal-response terminal-success">Tools Developed: 50+</div>
+                              <div class="terminal-response terminal-success">Last Scan: Just now</div>`,
+                    type: 'success'
+                },
+                'projects': {
+                    response: `<div class="terminal-response terminal-info">Security Projects (35 total):</div>
+                              <div class="terminal-help">1. Advanced Web Vulnerability Scanner</div>
+                              <div class="terminal-help">2. Network Penetration Suite</div>
+                              <div class="terminal-help">3. Zero-Day Research Platform</div>
+                              <div class="terminal-help">4. Mobile Security Assessment Framework</div>
+                              <div class="terminal-help">5. AI-Powered Ransomware Analyzer</div>
+                              <div class="terminal-response terminal-info">View all projects on Telegram: @cybersecurityTemDF</div>`,
+                    type: 'info'
+                },
+                'skills': {
+                    response: `<div class="terminal-response terminal-info">Technical Arsenal:</div>
+                              <div class="terminal-help">• Penetration Testing (Web, Network, Mobile)</div>
+                              <div class="terminal-help">• Vulnerability Research & Zero-Day Discovery</div>
+                              <div class="terminal-help">• Security Tool Development</div>
+                              <div class="terminal-help">• AI/ML in Cybersecurity</div>
+                              <div class="terminal-help">• Cryptography & Data Protection</div>`,
+                    type: 'info'
+                },
+                'clear': {
+                    response: '',
+                    type: 'clear'
+                }
+            };
+
+            let commandHistory = [];
+            let historyIndex = -1;
+
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const command = terminalInput.value.trim().toLowerCase();
+                    terminalInput.value = '';
                     
-                    const response = (Math.random() * 0.3 + 0.7).toFixed(1);
-                    responseMetric.textContent = `${response}s`;
+                    if (command === '') return;
+                    
+                    commandHistory.push(command);
+                    historyIndex = commandHistory.length;
+                    
+                    const outputLine = document.createElement('div');
+                    outputLine.className = 'terminal-line';
+                    outputLine.innerHTML = `<span class="terminal-prompt">root@security-ms:~#</span>
+                                           <span class="terminal-command">${command}</span>`;
+                    terminalOutput.appendChild(outputLine);
+                    
+                    if (commands[command]) {
+                        if (command === 'clear') {
+                            terminalOutput.innerHTML = '';
+                        } else {
+                            terminalOutput.innerHTML += commands[command].response;
+                        }
+                    } else {
+                        const errorResponse = `<div class="terminal-response terminal-error">Command not found: ${command}</div>
+                                              <div class="terminal-response terminal-info">Type 'help' for available commands</div>`;
+                        terminalOutput.innerHTML += errorResponse;
+                    }
+                    
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (commandHistory.length > 0) {
+                        historyIndex = Math.max(0, historyIndex - 1);
+                        terminalInput.value = commandHistory[historyIndex] || '';
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (commandHistory.length > 0) {
+                        historyIndex = Math.min(commandHistory.length, historyIndex + 1);
+                        terminalInput.value = commandHistory[historyIndex] || '';
+                    }
+                }
+            });
+
+            terminalClose.addEventListener('click', () => {
+                showNotification('Terminal closed (simulation)', 'info');
+            });
+
+            terminalMinimize.addEventListener('click', () => {
+                showNotification('Terminal minimized (simulation)', 'info');
+            });
+
+            terminalMaximize.addEventListener('click', () => {
+                interactiveTerminal.classList.toggle('expanded');
+                if (interactiveTerminal.classList.contains('expanded')) {
+                    interactiveTerminal.style.height = '600px';
+                } else {
+                    interactiveTerminal.style.height = '400px';
+                }
+            });
+
+            terminalInput.focus();
+        }
+
+        function initAttackMap() {
+            const worldMap = document.getElementById('worldMap');
+            const attacksBlocked = document.getElementById('attacksBlocked');
+            const activeThreats = document.getElementById('activeThreats');
+            const systemsProtected = document.getElementById('systemsProtected');
+            const responseTime = document.getElementById('responseTime');
+            const attackLog = document.getElementById('attackLog');
+
+            const attackTypes = [
+                { type: 'red', label: 'High Threat' },
+                { type: 'orange', label: 'Medium Threat' },
+                { type: 'green', label: 'Low Threat' }
+            ];
+
+            const cities = [
+                { name: 'New York', x: 25, y: 35 },
+                { name: 'London', x: 48, y: 32 },
+                { name: 'Tokyo', x: 80, y: 40 },
+                { name: 'Dubai', x: 58, y: 45 },
+                { name: 'Singapore', x: 72, y: 58 },
+                { name: 'Sydney', x: 85, y: 70 },
+                { name: 'San Francisco', x: 15, y: 40 },
+                { name: 'Frankfurt', x: 50, y: 35 },
+                { name: 'Mumbai', x: 65, y: 48 },
+                { name: 'São Paulo', x: 32, y: 65 }
+            ];
+
+            cities.forEach(city => {
+                const point = document.createElement('div');
+                point.className = 'map-point';
+                const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)];
+                point.classList.add(attackType.type);
+                point.style.left = `${city.x}%`;
+                point.style.top = `${city.y}%`;
+                point.style.animationDelay = `${Math.random() * 2}s`;
+                point.title = `${city.name} - ${attackType.label}`;
+                worldMap.appendChild(point);
+            });
+
+            let blockedCount = 1247;
+            let threatCount = 12;
+            let protectedCount = 156;
+
+            function updateStats() {
+                blockedCount += Math.floor(Math.random() * 3);
+                threatCount = Math.max(3, Math.min(20, threatCount + Math.floor(Math.random() * 3) - 1));
+                protectedCount += Math.floor(Math.random() * 2);
+
+                attacksBlocked.textContent = blockedCount.toLocaleString();
+                activeThreats.textContent = threatCount;
+                systemsProtected.textContent = protectedCount;
+                responseTime.textContent = `${(0.7 + Math.random() * 0.3).toFixed(1)}s`;
+
+                if (Math.random() > 0.7) {
+                    addLogEntry();
+                }
+            }
+
+            function addLogEntry() {
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                const types = [
+                    { type: 'alert', message: `Potential SQL injection attempt detected from ${getRandomIP()}` },
+                    { type: 'warning', message: `Port scan detected from ${getRandomIP()}` },
+                    { type: 'info', message: `Security systems performing routine scan` },
+                    { type: 'success', message: `Attack blocked successfully` },
+                    { type: 'warning', message: `Unusual traffic pattern detected from ${getRandomIP()}` }
+                ];
+
+                const logType = types[Math.floor(Math.random() * types.length)];
+                
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                logEntry.innerHTML = `
+                    <span class="log-time">${time}</span>
+                    <span class="log-type ${logType.type}">${logType.type.toUpperCase()}</span>
+                    <span class="log-message">${logType.message}</span>
+                `;
+                
+                attackLog.prepend(logEntry);
+                
+                if (attackLog.children.length > 8) {
+                    attackLog.removeChild(attackLog.lastChild);
+                }
+            }
+
+            function getRandomIP() {
+                return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+            }
+
+            setInterval(updateStats, 3000);
+            setInterval(() => {
+                const points = document.querySelectorAll('.map-point');
+                points.forEach(point => {
+                    if (Math.random() > 0.8) {
+                        const type = attackTypes[Math.floor(Math.random() * attackTypes.length)];
+                        point.className = 'map-point';
+                        point.classList.add(type.type);
+                    }
+                });
+            }, 5000);
+
+            updateStats();
+        }
+
+        // Security Quiz Implementation
+        function initQuiz() {
+            const questions = [
+                {
+                    level: 'easy',
+                    question: 'What does SQL Injection attack target in a web application?',
+                    options: [
+                        'Database layer',
+                        'Frontend JavaScript',
+                        'CSS styles',
+                        'Server hardware'
+                    ],
+                    correct: 0,
+                    explanation: 'SQL Injection targets the database layer by injecting malicious SQL code through user inputs.'
+                },
+                {
+                    level: 'medium',
+                    question: 'Which of these is NOT a type of XSS (Cross-Site Scripting) attack?',
+                    options: [
+                        'Reflected XSS',
+                        'Stored XSS',
+                        'DOM-based XSS',
+                        'Server-side XSS'
+                    ],
+                    correct: 3,
+                    explanation: 'There are three main types of XSS: Reflected, Stored, and DOM-based. Server-side XSS is not a standard XSS type.'
+                },
+                {
+                    level: 'hard',
+                    question: 'In cryptography, what is the main difference between symmetric and asymmetric encryption?',
+                    options: [
+                        'Symmetric uses same key, asymmetric uses different keys',
+                        'Symmetric is faster, asymmetric is slower',
+                        'Symmetric is for data, asymmetric is for signatures',
+                        'All of the above'
+                    ],
+                    correct: 3,
+                    explanation: 'All statements are correct differences between symmetric and asymmetric encryption.'
+                },
+                {
+                    level: 'expert',
+                    question: 'What is the primary purpose of a reverse shell in penetration testing?',
+                    options: [
+                        'To encrypt communication',
+                        'To establish command & control from target to attacker',
+                        'To bypass firewalls',
+                        'To hide network traffic'
+                    ],
+                    correct: 1,
+                    explanation: 'A reverse shell establishes a connection from the compromised system back to the attacker, allowing command execution.'
+                },
+                {
+                    level: 'expert',
+                    question: 'Which technique is used to bypass ASLR (Address Space Layout Randomization)?',
+                    options: [
+                        'Heap spraying',
+                        'ROP chains',
+                        'Format string vulnerabilities',
+                        'Buffer overflow with NOP sled'
+                    ],
+                    correct: 1,
+                    explanation: 'ROP (Return-Oriented Programming) chains are commonly used to bypass ASLR by reusing existing code snippets.'
+                }
+            ];
+
+            let currentQuestion = 0;
+            let score = 0;
+            let selectedOption = -1;
+            let quizCompleted = false;
+
+            const quizQuestion = document.getElementById('quizQuestion');
+            const quizOptions = document.getElementById('quizOptions');
+            const quizFeedback = document.getElementById('quizFeedback');
+            const quizNextBtn = document.getElementById('quizNextBtn');
+            const quizProgressBar = document.getElementById('quizProgressBar');
+            const questionCounter = document.getElementById('questionCounter');
+            const quizResults = document.getElementById('quizResults');
+            const quizScore = document.getElementById('quizScore');
+            const quizResultText = document.getElementById('quizResultText');
+            const quizRestartBtn = document.getElementById('quizRestartBtn');
+            const quizContent = document.getElementById('quizContent');
+
+            function loadQuestion() {
+                if (currentQuestion >= questions.length) {
+                    showResults();
+                    return;
+                }
+
+                const q = questions[currentQuestion];
+                quizQuestion.textContent = `[${q.level.toUpperCase()}] ${q.question}`;
+                questionCounter.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+                quizProgressBar.style.width = `${((currentQuestion) / questions.length) * 100}%`;
+                
+                quizOptions.innerHTML = '';
+                q.options.forEach((option, index) => {
+                    const optionEl = document.createElement('button');
+                    optionEl.className = 'quiz-option';
+                    optionEl.textContent = option;
+                    optionEl.addEventListener('click', () => selectOption(index));
+                    quizOptions.appendChild(optionEl);
+                });
+
+                quizFeedback.className = 'quiz-feedback';
+                quizFeedback.textContent = '';
+                quizNextBtn.classList.remove('show');
+                selectedOption = -1;
+            }
+
+            function selectOption(index) {
+                if (quizCompleted) return;
+
+                // Remove selected class from all options
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+
+                // Add selected class to clicked option
+                document.querySelectorAll('.quiz-option')[index].classList.add('selected');
+                selectedOption = index;
+
+                const q = questions[currentQuestion];
+                const isCorrect = index === q.correct;
+
+                // Show feedback
+                quizFeedback.textContent = isCorrect 
+                    ? `✓ Correct! ${q.explanation}` 
+                    : `✗ Incorrect. ${q.explanation}`;
+                quizFeedback.className = `quiz-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+
+                // Mark options as correct/incorrect
+                document.querySelectorAll('.quiz-option').forEach((opt, i) => {
+                    if (i === q.correct) {
+                        opt.classList.add('correct');
+                    } else if (i === index && i !== q.correct) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    score++;
+                    createConfetti();
+                }
+
+                quizNextBtn.classList.add('show');
+            }
+
+            function nextQuestion() {
+                if (selectedOption === -1) {
+                    showNotification('Please select an answer!', 'warning');
+                    return;
+                }
+
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }
+
+            function showResults() {
+                quizContent.style.display = 'none';
+                quizResults.style.display = 'block';
+                quizProgressBar.style.width = '100%';
+                
+                quizScore.textContent = `${score}/${questions.length}`;
+                
+                let resultMessage = '';
+                if (score === questions.length) {
+                    resultMessage = 'Excellent! You have expert-level security knowledge! 🎯';
+                    createConfetti(true);
+                } else if (score >= 3) {
+                    resultMessage = 'Good job! You have solid security knowledge! 👍';
+                } else {
+                    resultMessage = 'Keep learning! Security is a journey, not a destination. 📚';
                 }
                 
-                if (commandOutput.children.length > 15) {
-                    commandOutput.removeChild(commandOutput.firstChild);
+                quizResultText.textContent = resultMessage;
+                quizCompleted = true;
+            }
+
+            function restartQuiz() {
+                currentQuestion = 0;
+                score = 0;
+                selectedOption = -1;
+                quizCompleted = false;
+                
+                quizContent.style.display = 'block';
+                quizResults.style.display = 'none';
+                
+                loadQuestion();
+            }
+
+            function createConfetti(extended = false) {
+                const celebration = document.getElementById('celebration');
+                celebration.style.display = 'block';
+                
+                const confettiCount = extended ? 150 : 50;
+                
+                for (let i = 0; i < confettiCount; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    
+                    // Random properties
+                    const colors = ['#0066ff', '#ff0055', '#00ff88', '#ffaa00', '#aa00ff'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const size = Math.random() * 10 + 5;
+                    const startX = Math.random() * 100;
+                    const startY = Math.random() * 100;
+                    const endX = startX + (Math.random() * 200 - 100);
+                    const endY = startY + (Math.random() * 200 - 100);
+                    const rotation = Math.random() * 360;
+                    const duration = Math.random() * 2 + 1;
+                    const delay = Math.random() * 0.5;
+                    
+                    confetti.style.background = color;
+                    confetti.style.width = `${size}px`;
+                    confetti.style.height = `${size}px`;
+                    confetti.style.left = `${startX}%`;
+                    confetti.style.top = `${startY}%`;
+                    confetti.style.opacity = '1';
+                    
+                    celebration.appendChild(confetti);
+                    
+                    // Animate
+                    const animation = confetti.animate([
+                        { 
+                            transform: `translate(0, 0) rotate(0deg)`, 
+                            opacity: 1 
+                        },
+                        { 
+                            transform: `translate(${endX - startX}vw, ${endY - startY}vh) rotate(${rotation}deg)`, 
+                            opacity: 0 
+                        }
+                    ], {
+                        duration: duration * 1000,
+                        delay: delay * 1000,
+                        easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+                    });
+                    
+                    animation.onfinish = () => {
+                        confetti.remove();
+                        if (i === confettiCount - 1) {
+                            celebration.style.display = 'none';
+                            celebration.innerHTML = '';
+                        }
+                    };
                 }
-            }, 8000);
+            }
+
+            // Initialize quiz
+            quizNextBtn.addEventListener('click', nextQuestion);
+            quizRestartBtn.addEventListener('click', restartQuiz);
+            loadQuestion();
+        }
+
+        // Request Assistance Form
+        function initAssistanceForm() {
+            const assistanceOptions = document.querySelectorAll('.assistance-option');
+            const assistanceForm = document.getElementById('assistanceForm');
+            const assistanceType = document.getElementById('assistanceType');
+            const assistanceRequestForm = document.getElementById('assistanceRequestForm');
+            const assistanceDetails = document.getElementById('assistanceDetails');
+            const assistanceContact = document.getElementById('assistanceContact');
+
+            assistanceOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove selected class from all options
+                    assistanceOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    option.classList.add('selected');
+                    
+                    // Show form with appropriate type
+                    const type = option.getAttribute('data-type');
+                    let typeText = '';
+                    let placeholder = '';
+                    
+                    switch(type) {
+                        case 'problem':
+                            typeText = 'Problem / Issue';
+                            placeholder = 'Describe the security issue or technical problem you\'re facing...';
+                            break;
+                        case 'assistance':
+                            typeText = 'Assistance Request';
+                            placeholder = 'Describe what kind of help you need with your security project or tool...';
+                            break;
+                        case 'learning':
+                            typeText = 'Learning Request';
+                            placeholder = 'Describe what you want to learn and your current knowledge level...';
+                            break;
+                        case 'development':
+                            typeText = 'Development Request';
+                            placeholder = 'Describe the tool, application, or security solution you need developed...';
+                            break;
+                    }
+                    
+                    assistanceType.textContent = typeText;
+                    assistanceDetails.placeholder = placeholder;
+                    assistanceForm.classList.add('show');
+                    
+                    // Scroll to form
+                    assistanceForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                });
+            });
+
+            assistanceRequestForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const contactInfo = assistanceContact.value.trim();
+                const isValid = /^(\+\d{1,4}\d{6,14})$|^(@[a-zA-Z0-9_]{5,32})$/.test(contactInfo);
+                
+                if (!isValid) {
+                    showNotification('Please enter a valid Telegram @username or phone number with country code', 'error');
+                    return;
+                }
+                
+                if (assistanceDetails.value.trim().length < 10) {
+                    showNotification('Please provide more details about your request', 'error');
+                    return;
+                }
+                
+                const selectedOption = document.querySelector('.assistance-option.selected');
+                if (!selectedOption) {
+                    showNotification('Please select a request type first', 'error');
+                    return;
+                }
+                
+                const requestType = assistanceType.textContent;
+                const requestDetails = assistanceDetails.value;
+                const whatsappNumber = '251970384031';
+                
+                let message = `New Assistance Request from SeCuriTy-Ms Website:%0A%0A`;
+                message += `Request Type: ${requestType}%0A`;
+                message += `Contact: ${contactInfo}%0A%0A`;
+                message += `Details: ${encodeURIComponent(requestDetails)}%0A%0A`;
+                message += `Timestamp: ${new Date().toLocaleString()}`;
+                
+                window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+                
+                showNotification('Opening WhatsApp with your request...', 'success');
+                assistanceRequestForm.reset();
+                assistanceForm.classList.remove('show');
+                assistanceOptions.forEach(opt => opt.classList.remove('selected'));
+            });
         }
 
         function initCustomCursor() {
@@ -3456,7 +4475,7 @@
                 cursor.style.top = e.clientY + 'px';
             });
 
-            document.querySelectorAll('a, button, .skill-card, .help-option, .tab, .accordion-header, .service-card, .contact-item, .command-btn').forEach(el => {
+            document.querySelectorAll('a, button, .skill-card, .help-option, .tab, .accordion-header, .service-card, .contact-item, .assistance-option, .quiz-option').forEach(el => {
                 el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
@@ -3672,7 +4691,7 @@
             if (typeof gsap !== 'undefined') {
                 gsap.registerPlugin(ScrollTrigger);
 
-                gsap.utils.toArray('.skill-card, .service-card, .stat-card, .project-card, .tool-card, .timeline-content').forEach(element => {
+                gsap.utils.toArray('.skill-card, .service-card, .stat-card, .project-card, .tool-card, .timeline-content, .research-content, .donation-card, .assistance-option').forEach(element => {
                     gsap.from(element, {
                         scrollTrigger: {
                             trigger: element,
@@ -3809,7 +4828,7 @@
         }
 
         document.addEventListener('contextmenu', (e) => {
-            if (e.target.closest('.address') || e.target.closest('.code-block') || e.target.closest('.command-output')) {
+            if (e.target.closest('.address') || e.target.closest('.code-block') || e.target.closest('.attack-log') || e.target.closest('.donation-address')) {
                 e.preventDefault();
                 showNotification('Security feature: Copy protection active', 'warning');
             }
@@ -3828,7 +4847,8 @@
             console.log('SeCuriTy-Ms Platform Loaded Successfully');
             console.log('Version: 2026.1.0 Elite Edition');
             console.log('Experience: 4+ Years | Projects: 35');
-            console.log('Cyber Command Center: Active');
+            console.log('Interactive Terminal: Active');
+            console.log('Security Quiz: Ready');
             console.log('Protection System: Active');
             console.log('All systems operational');
         });
